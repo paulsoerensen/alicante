@@ -1,0 +1,55 @@
+﻿@page "/course"
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Components.Authorization
+@using Alicante.Client.BaseComponents
+@rendermode @(new InteractiveAutoRenderMode(false))
+
+<h3>Bane liste</h3>
+
+@if (courses == null)
+{
+    <p>Henter ...</p>
+}
+else
+{
+    <a class="btn btn-primary" href="/Course/upsert">Create</a>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Navn</th>
+                <th>Course rating</th>
+                <th>Slope</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var c in courses)
+            {
+                <tr>
+                    <td>@c.CourseName</td>
+                    <td>@c.CourseRating</td>
+                    <td>@c.Slope</td>
+                    <td>
+                        <a class="btn btn-secondary" href="/course/upsert/@c.CourseId">Rediger</a>
+                        <AuthorizeView Roles="Admin">
+                            <Authorized>
+                                <button class="btn btn-danger" @onclick="()=> { DeleteID = c.CourseId; Modal.Open();}">Slet</button>
+                            </Authorized>
+                        </AuthorizeView>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <AppModal @ref="Modal">
+        <Title>Obs</Title>
+        <Body>
+            Vil du slette banen?
+        </Body>
+        <Footer>
+            <button type="button" class="btn btn-primary" style="width:80px" @onclick="HandleDelete">Yes</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" @onclick="() => Modal.Close()">Cancel</button>
+        </Footer>
+    </AppModal> 
+}

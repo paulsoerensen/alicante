@@ -1,0 +1,32 @@
+﻿@page "/result/upsert/"
+@page "/result/upsert/{id:int}"
+<h3>Opretret spiller</h3>
+@rendermode @(new InteractiveAutoRenderMode(false))
+
+<EditForm OnValidSubmit="Submit" FormName="ResultUpsert" Model="Model">
+    <DataAnnotationsValidator />
+    <div class="container">
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label> Price</label>
+                <InputNumber class="form-control" @bind-Value="Model.MatchId" />
+                    <ValidationMessage For="() => Model.MatchId" />
+            </div>
+        </div> 
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label>Navn</label>
+                <InputNumber class="form-control" @bind-Value="Model.Hcp" />
+                <ValidationMessage For="() => Model.Hcp" />
+            </div>
+            <div class="col-md-6">
+                <label>Hcp</label>
+                <InputNumber class="form-control" @bind-Value="Model.Score" />
+                <ValidationMessage For="() => Model.Score" />
+            </div>
+        </div>
+
+
+        <button class="btn btn-secondary" type="submit">Save</button>
+    </div>
+</EditForm>

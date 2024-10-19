@@ -1,0 +1,36 @@
+﻿@page "/Tournament/upsert/"
+@page "/Tournament/upsert/{id:int}"
+<h3>Opret/ret Turnering</h3>
+@rendermode @(new InteractiveAutoRenderMode(false))
+
+<EditForm OnValidSubmit="Submit" FormName="TournamentUpsert" Model="Model">
+    <DataAnnotationsValidator />
+    <div class="container">
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label>Turnerings navn</label>
+                <InputText class="form-control" @bind-Value="Model.TournamentName" />
+                <ValidationMessage For="() => Model.TournamentName" />
+            </div>
+@*          <div class="col-md-6">
+                <label> Quantity</label>
+                <InputNumber class="form-control" @bind-Value="Model.TournamentName" />
+                <ValidationMessage For="() => Model.Quantity" />
+            </div> *@
+        </div>
+
+@*         <div class="row mb-3">
+            <div class="col-md-6">
+                <label> Price</label>
+                <InputNumber class="form-control" @bind-Value="Model.Price" />
+                <ValidationMessage For="() => Model.Price" />
+            </div>
+            <div class="col-md-6">
+                <label> Description</label>
+                <InputText class="form-control" @bind-Value="Model.TournamentName" />
+                <ValidationMessage For="() => Model.Description" />
+            </div>
+        </div> *@
+        <button class="btn btn-secondary" type="submit">Save</button>
+    </div>
+</EditForm>

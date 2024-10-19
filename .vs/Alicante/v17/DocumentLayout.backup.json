@@ -1,0 +1,144 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Projects\\MensSection\\Alicante\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{9D892243-FDCA-41A3-B8EA-8DE635356177}|Alicante\\Alicante.csproj|c:\\projects\\menssection\\alicante\\alicante\\data\\repository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9D892243-FDCA-41A3-B8EA-8DE635356177}|Alicante\\Alicante.csproj|solutionrelative:alicante\\data\\repository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5AEBC97E-D3AD-444A-87AA-3BC6B24BFC6D}|Alicante.Client\\Alicante.Client.csproj|c:\\projects\\menssection\\alicante\\alicante.client\\pages\\match\\matchupsert.razor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5AEBC97E-D3AD-444A-87AA-3BC6B24BFC6D}|Alicante.Client\\Alicante.Client.csproj|solutionrelative:alicante.client\\pages\\match\\matchupsert.razor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5AEBC97E-D3AD-444A-87AA-3BC6B24BFC6D}|Alicante.Client\\Alicante.Client.csproj|c:\\projects\\menssection\\alicante\\alicante.client\\pages\\match\\matchupsert.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{5AEBC97E-D3AD-444A-87AA-3BC6B24BFC6D}|Alicante.Client\\Alicante.Client.csproj|solutionrelative:alicante.client\\pages\\match\\matchupsert.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5AEBC97E-D3AD-444A-87AA-3BC6B24BFC6D}|Alicante.Client\\Alicante.Client.csproj|c:\\projects\\menssection\\alicante\\alicante.client\\pages\\match\\matchlist.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{5AEBC97E-D3AD-444A-87AA-3BC6B24BFC6D}|Alicante.Client\\Alicante.Client.csproj|solutionrelative:alicante.client\\pages\\match\\matchlist.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9D892243-FDCA-41A3-B8EA-8DE635356177}|Alicante\\Alicante.csproj|c:\\projects\\menssection\\alicante\\alicante\\controllers\\tournamentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9D892243-FDCA-41A3-B8EA-8DE635356177}|Alicante\\Alicante.csproj|solutionrelative:alicante\\controllers\\tournamentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 10,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:129:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{57d563b6-44a5-47df-85be-f4199ad6b651}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c64b9c2-e352-428e-a56d-0ace190b99a6}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{c9c0ae26-aa77-11d2-b3f0-0000f87570ee}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{75188d03-9892-4ae2-abf1-207126247ce5}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:129:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:130:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:130:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Repository.cs",
+              "DocumentMoniker": "C:\\Projects\\MensSection\\Alicante\\Alicante\\Data\\Repository.cs",
+              "RelativeDocumentMoniker": "Alicante\\Data\\Repository.cs",
+              "ToolTip": "C:\\Projects\\MensSection\\Alicante\\Alicante\\Data\\Repository.cs",
+              "RelativeToolTip": "Alicante\\Data\\Repository.cs",
+              "ViewState": "AgIAAFoAAAAAAAAAAAAwwHIAAAAlAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-19T20:20:48.015Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "MatchUpsert.razor.cs",
+              "DocumentMoniker": "C:\\Projects\\MensSection\\Alicante\\Alicante.Client\\Pages\\Match\\MatchUpsert.razor.cs",
+              "RelativeDocumentMoniker": "Alicante.Client\\Pages\\Match\\MatchUpsert.razor.cs",
+              "ToolTip": "C:\\Projects\\MensSection\\Alicante\\Alicante.Client\\Pages\\Match\\MatchUpsert.razor.cs",
+              "RelativeToolTip": "Alicante.Client\\Pages\\Match\\MatchUpsert.razor.cs",
+              "ViewState": "AgIAACsAAAAAAAAAAAAwwDEAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-19T18:43:01.92Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "MatchUpsert.razor",
+              "DocumentMoniker": "C:\\Projects\\MensSection\\Alicante\\Alicante.Client\\Pages\\Match\\MatchUpsert.razor",
+              "RelativeDocumentMoniker": "Alicante.Client\\Pages\\Match\\MatchUpsert.razor",
+              "ToolTip": "C:\\Projects\\MensSection\\Alicante\\Alicante.Client\\Pages\\Match\\MatchUpsert.razor",
+              "RelativeToolTip": "Alicante.Client\\Pages\\Match\\MatchUpsert.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAA3AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-10-13T20:56:20.939Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "MatchList.razor",
+              "DocumentMoniker": "C:\\Projects\\MensSection\\Alicante\\Alicante.Client\\Pages\\Match\\MatchList.razor",
+              "RelativeDocumentMoniker": "Alicante.Client\\Pages\\Match\\MatchList.razor",
+              "ToolTip": "C:\\Projects\\MensSection\\Alicante\\Alicante.Client\\Pages\\Match\\MatchList.razor",
+              "RelativeToolTip": "Alicante.Client\\Pages\\Match\\MatchList.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAlAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-10-11T06:47:15.198Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "TournamentController.cs",
+              "DocumentMoniker": "C:\\Projects\\MensSection\\Alicante\\Alicante\\Controllers\\TournamentController.cs",
+              "RelativeDocumentMoniker": "Alicante\\Controllers\\TournamentController.cs",
+              "ToolTip": "C:\\Projects\\MensSection\\Alicante\\Alicante\\Controllers\\TournamentController.cs",
+              "RelativeToolTip": "Alicante\\Controllers\\TournamentController.cs",
+              "ViewState": "AgIAACUAAAAAAAAAAAAAwCQAAAA0AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-10T20:43:01.303Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

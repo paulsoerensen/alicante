@@ -1,0 +1,94 @@
+﻿@page "/Match/upsert/"
+@page "/Match/upsert/{id:int}"
+<h3>Opret match</h3>
+@rendermode @(new InteractiveAutoRenderMode(false))
+
+
+<RadzenTemplateForm Data="@Model" Submit="@((MatchModel args) => { Submit(args); })">
+    <RadzenRow Gap="2rem" class="rz-p-0 rz-p-lg-4">
+        <RadzenColumn Size="12">
+            <RadzenStack>
+            <RadzenFieldset Text="Match Info">
+                <RadzenStack  Gap="1rem">
+                <RadzenRow AlignItems="AlignItems.Center">
+                    <RadzenColumn Size="12" SizeMD="4">
+                                <RadzenLabel Text="Bane" Component="CourseId" />
+                    </RadzenColumn>
+                    <RadzenColumn Size="12" SizeMD="8">
+                        <RadzenDropDown @bind-Value="Model.CourseId" AllowClear="true" Placeholder="Vælg bane"
+                                        Data="@courses" Style="width: 100%;" 
+                                        TextProperty="CourseName" ValueProperty="CourseId" Name="CourseId">
+                        </RadzenDropDown>
+                    </RadzenColumn>
+                </RadzenRow>
+                <RadzenRow AlignItems="AlignItems.Center">
+                    <RadzenColumn Size="12" SizeMD="4">
+                        <RadzenLabel Text="Match dato" Component="MatchDate" />
+                    </RadzenColumn>
+                    <RadzenColumn Size="12" SizeMD="8">
+                        <RadzenDatePicker Style="width: 100%;" Name="ExpiryDate" @bind-Value="Model.MatchDate" />
+                    </RadzenColumn>
+                </RadzenRow>
+                <RadzenRow AlignItems="AlignItems.Center">
+                    <RadzenColumn Size="12" SizeMD="4">
+                        <RadzenLabel Text="2. runde" Component="SecondRound" />
+                    </RadzenColumn>
+                    <RadzenColumn Size="12" SizeMD="8">
+                        <RadzenCheckBox @bind-Value=@Model.SecondRound Name="SecondRound" />
+                    </RadzenColumn>
+                </RadzenRow>
+    
+                </RadzenStack>
+            </RadzenFieldset>
+            </RadzenStack>
+        </RadzenColumn>
+    </RadzenRow>
+    <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.Center" Gap="1rem" class="rz-mt-8 rz-mb-4">
+        <RadzenButton ButtonType="ButtonType.Submit" Size="ButtonSize.Large" Icon="save" Text="Gem" />
+        <RadzenButton ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Large" Icon="cancel" Text="Fortryd" Click="@Cancel" />
+    </RadzenStack>
+</RadzenTemplateForm>
+ 
+
+
+@* <EditForm OnValidSubmit="Submit" FormName="MatchUpsert" Model="Model">
+    <DataAnnotationsValidator />
+    <div class="container">
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label>Match dato</label>
+                <InputDate class="form-control" @bind-Value="Model.MatchDate" />
+                <ValidationMessage For="() => Model.MatchDate" />
+            </div>
+            <div class="col-md-6">
+                <label>2. runde</label>
+                <InputCheckbox class="form-control" @bind-Value="Model.SecondRound" />
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" 
+                    JustifyContent="JustifyContent.Left" Gap="1.5rem" class="rz-p-sm-12">
+                    <RadzenLabel Text="Bane" Component="DropDownBindValue" />
+                    <RadzenDropDown @bind-Value=@Model.CourseId Data=@courses 
+                        TextProperty="@nameof(CourseModel.CourseName)" 
+                        ValueProperty="@nameof(CourseModel.CourseId)" Style="width: 100%; max-width: 400px;" 
+                        Name="DropDownTextValueProperties" />
+                </RadzenStack>
+            </div>
+        </div>
+         <div class="row mb-3">
+            <div class="col-md-6">
+                <label> Price</label>
+                <InputNumber class="form-control" @bind-Value="Model.Price" />
+                <ValidationMessage For="() => Model.Price" />
+            </div>
+            <div class="col-md-6">
+                <label> Description</label>
+                <InputText class="form-control" @bind-Value="Model.TournamentName" />
+                <ValidationMessage For="() => Model.Description" />
+            </div>
+        </div> 
+        <button class="btn btn-secondary" type="submit">Save</button>
+    </div>
+</EditForm> *@

@@ -1,0 +1,33 @@
+﻿@page "/Course/upsert/"
+@page "/Course/upsert/{id:int}"
+<h3>Opret bane</h3>
+@rendermode @(new InteractiveAutoRenderMode(false))
+
+<EditForm OnValidSubmit="Submit" FormName="CourseUpsert" Model="Model">
+    <DataAnnotationsValidator />
+    <div class="container">
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label>Navn</label>
+                <InputText class="form-control" @bind-Value="Model.CourseName" />
+                <ValidationMessage For="() => Model.CourseName" />
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label>Course rating</label>
+                    <InputNumber class="form-control" @bind-Value="Model.CourseRating" />
+                    <ValidationMessage For="() => Model.CourseRating" />
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label>Slope</label>
+                <InputNumber class="form-control" @bind-Value="Model.Slope" />
+                <ValidationMessage For="() => Model.Slope" />
+            </div>
+        </div>
+        <button class="btn btn-secondary" type="submit">Gem</button>
+    </div>
+</EditForm>

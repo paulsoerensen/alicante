@@ -1,0 +1,54 @@
+﻿@page "/tournament"
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Components.Authorization
+@using Alicante.Client.BaseComponents
+@rendermode @(new InteractiveAutoRenderMode(false))
+
+<h3>Turneringer</h3>
+
+@if (tournaments == null)
+{
+    <p>Henter ...</p>
+}
+else
+{
+    <a class="btn btn-primary" href="/tournament/upsert">Create</a>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Navn</th>
+                <th>Aktuel</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var p in tournaments)
+            {
+                <tr>
+                    <td>@p.TournamentName</td>
+                    <td>@p.Active</td>
+
+                    <td>
+                        <a class="btn btn-secondary" href="/tournament/upsert/@p.TournamentId">Rediger</a>
+                        <AuthorizeView Roles="Admin">
+                            <Authorized>
+                                <button class="btn btn-danger" @onclick="()=> { DeleteID = p.TournamentId; Modal.Open();}">Slet</button>
+                            </Authorized>
+                        </AuthorizeView>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <AppModal @ref="Modal">
+        <Title>Obs</Title>
+        <Body>
+            Vil du slette spilleren?
+        </Body>
+        <Footer>
+            <button type="button" class="btn btn-primary" style="width:80px" @onclick="HandleDelete">Ja</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" @onclick="() => Modal.Close()">Fortryd</button>
+        </Footer>
+    </AppModal> 
+}

@@ -5541,9 +5541,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Projects\\MensSection\\Alicante\\Alicante\\Alicante.csproj",
-      "projectName": "Alicante",
-      "projectPath": "C:\\Projects\\MensSection\\Alicante\\Alicante\\Alicante.csproj",
+      "projectUniqueName": "C:\\Projects\\MensSection\\Alicante\\Alicante\\Alicante.Server.csproj",
+      "projectName": "Alicante.Server",
+      "projectPath": "C:\\Projects\\MensSection\\Alicante\\Alicante\\Alicante.Server.csproj",
       "packagesPath": "C:\\Users\\pas\\.nuget\\packages\\",
       "outputPath": "C:\\Projects\\MensSection\\Alicante\\Alicante\\obj\\",
       "projectStyle": "PackageReference",

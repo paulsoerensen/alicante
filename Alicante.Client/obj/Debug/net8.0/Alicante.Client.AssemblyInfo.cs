@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Alicante.Client")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+54f3bd467791c26902c55c4949eba5bf310e3ba0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fb61898e2ed18cc1642650b7546dee8473c03bc1")]
 [assembly: System.Reflection.AssemblyProductAttribute("Alicante.Client")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Alicante.Client")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

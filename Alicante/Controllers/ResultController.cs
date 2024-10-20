@@ -35,7 +35,6 @@ public class ResultController : BaseController
         return Ok(new BaseResponseModel { Success = true, Data = models });
     }
 
-
     // POST: api/result
     [HttpPost]
     public async Task<ActionResult<BaseResponseModel>> UpsertResult(ResultModel model)

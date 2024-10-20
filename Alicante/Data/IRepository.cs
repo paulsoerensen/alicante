@@ -17,6 +17,7 @@ public interface IRepository
 
     Task<PlayerModel> GetPlayer(int playerId);
     Task<IEnumerable<PlayerModel>> FindAllPlayer();
+    Task<IEnumerable<PlayerViewModel>> GetPlayersForMatch(int matchId);
     Task<PlayerModel> UpsertPlayer(PlayerModel player);
     Task<int> DeletePlayer(int playerId);
 

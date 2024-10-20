@@ -42,7 +42,7 @@ public class MatchController : BaseController
         {
             return Ok(new BaseResponseModel { Success = false, ErrorMessage = "Not found" });
         }
-        return Ok(new BaseResponseModel { Success = false, Data = model });
+        return Ok(new BaseResponseModel { Success = true, Data = model });
     }
 
     // POST: api/Match

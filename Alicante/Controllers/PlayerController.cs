@@ -35,6 +35,13 @@ public class PlayerController : BaseController
         return Ok(new BaseResponseModel { Success = true, Data = models });
     }
 
+    // GET: api/Player/match/matchId
+    [HttpGet("match/{matchId}")]
+    public async Task<ActionResult<BaseResponseModel>> GetPlayersForMatch(int matchId)
+    {
+        var models = await _repo.GetPlayersForMatch(matchId);
+        return Ok(new BaseResponseModel { Success = true, Data = models });
+    }
 
     // POST: api/player
     [HttpPost]

@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alicante", "Alicante\Alican
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alicante.Client", "Alicante.Client\Alicante.Client.csproj", "{5AEBC97E-D3AD-444A-87AA-3BC6B24BFC6D}"
 EndProject
-Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "AlicanteData", "..\AlicanteData\AlicanteData.sqlproj", "{37979B4E-ED47-412B-B36C-C89461CC615B}"
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "AlicanteData", "AlicanteData\AlicanteData.sqlproj", "{37979B4E-ED47-412B-B36C-C89461CC615B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

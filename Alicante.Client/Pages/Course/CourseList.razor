@@ -12,11 +12,12 @@
 }
 else
 {
-    <a class="btn btn-primary" href="/Course/upsert">Create</a>
+    <a class="btn btn-primary" href="/Course/upsert">Opret ny</a>
     <table class="table">
         <thead>
             <tr>
                 <th>Navn</th>
+                <th>Par</th>
                 <th>Course rating</th>
                 <th>Slope</th>
                 <th></th>
@@ -27,6 +28,7 @@ else
             {
                 <tr>
                     <td>@c.CourseName</td>
+                    <td>@c.Par</td>
                     <td>@c.CourseRating</td>
                     <td>@c.Slope</td>
                     <td>

@@ -9,9 +9,13 @@ namespace Alicante.Client.Pages.Result;
 public partial class ResultUpsert
 {
     public ResultModel Model { get; set; } = new();
+    public List<PlayerViewModel> players { get; set; } = new();
 
     [Parameter]
     public int? Id { get; set; }
+
+    [Parameter]
+    public int? matchId { get; set; }
 
     [Inject]
     public HttpClient http { get; set; }
@@ -22,9 +26,15 @@ public partial class ResultUpsert
 
     protected override async Task OnInitializedAsync()
     {
+        var res = await http.GetFromJsonAsync<BaseResponseModel>($"/api/player/match/{matchId}");
+        if (res != null && res.Success)
+        {
+            players = JsonConvert.DeserializeObject<List<PlayerViewModel>>(res.Data.ToString());
+        }
+
         if (Id != null)
         {
-            var res = await http.GetFromJsonAsync<BaseResponseModel>($"/api/result/{Id}");
+            res = await http.GetFromJsonAsync<BaseResponseModel>($"/api/result/{Id}");
             if (res != null && res.Success)
             {
                 Model = JsonConvert.DeserializeObject<ResultModel>(res.Data.ToString());

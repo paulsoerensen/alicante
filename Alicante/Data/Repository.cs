@@ -79,7 +79,7 @@ namespace Alicante.Data
         {
             using (IDbConnection db = CreateConnection())
             {
-                const string query = "SELECT MatchId, MatchDate, CourseId, CourseName, " +
+                const string query = "SELECT TournamentId, MatchId, MatchDate, CourseId, CourseName, " +
                                         "CourseRating, Slope, Par, SecondRound " +
                                         "FROM dbo.vMatch " +
                                         "WHERE MatchId = @matchId";
@@ -91,7 +91,7 @@ namespace Alicante.Data
         {
             using (IDbConnection db = CreateConnection())
             {
-                const string query = "SELECT TournamentId, TournamentName, Active, " +
+                const string query = @"SELECT TournamentId, TournamentName, Active, " +
                     "                   MatchId, MatchDate, CourseId, CourseName, " +
                                         "CourseRating, Slope, Par, SecondRound " +
                                         "FROM dbo.vMatch " +
@@ -153,9 +153,22 @@ namespace Alicante.Data
             }
         }
 
+        public async Task<IEnumerable<PlayerViewModel>> GetPlayersForMatch(int matchId)
+        {
+            var sql = @"SELECT PlayerId, PlayerName, " +
+                "((HcpIndex * Slope /113) + CourseRating - Par) as Hcp" +
+                "FROM dbo.vMatch, Player " +
+                "where MatchId = @matchId";
+
+            using (IDbConnection db = CreateConnection())
+            {
+                return await db.QueryAsync<PlayerViewModel>(sql, new { matchId });
+            }
+        }
+
         public async Task<PlayerModel> UpsertPlayer(PlayerModel player)
         {
-            var sql = "EXEC UpsertPlayer @PlayerId, @Name, @HcpIndex";
+            var sql = "EXEC UpsertPlayer @PlayerId, @PlayerName, @HcpIndex";
             using (var connection = CreateConnection())
             {
                 var result = await connection.QuerySingleAsync<PlayerModel>(sql, new
@@ -286,10 +299,6 @@ namespace Alicante.Data
             }
         }
 
-
-        #endregion
-
-        #region 
         public async Task<IEnumerable<ResultViewModel>> GetResults()
         {
             var sql = @"SELECT 
@@ -303,6 +312,7 @@ namespace Alicante.Data
                 return await db.QueryAsync<ResultViewModel>(sql);
             }
         }
+
         public async Task<IEnumerable<ResultViewModel>> ResultFromMatch(int matchId)
         {
             var sql = @"SELECT 

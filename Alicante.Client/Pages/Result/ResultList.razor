@@ -12,7 +12,19 @@
 }
 else
 {
-    <a class="btn btn-primary" href="/result/upsert">Ny score</a>
+    <RadzenRow AlignItems="AlignItems.Center">
+        <RadzenColumn Size="12" SizeMD="4">
+            <RadzenLabel Text="Match" Component="MatchId" />
+        </RadzenColumn>
+        <RadzenColumn Size="12" SizeMD="8">
+            <RadzenDropDown @bind-Value="MatchId" AllowClear="true" Placeholder="Vælg match"
+                            Data="@Matches" Style="width: 100%;" 
+                            TextProperty="MatchText" ValueProperty="MatchId" Name="MatchId">
+            </RadzenDropDown>
+        </RadzenColumn>
+    </RadzenRow>
+
+    <a class="btn btn-primary" href="/result/upsert/matchId">Ny score</a>
     <table class="table">
         <thead>
             <tr>

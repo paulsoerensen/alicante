@@ -11,13 +11,20 @@ public partial class ResultList
 {
     [Inject]
     public HttpClient http { get; set; }
+    public List<KeyValuePair<int, string>>? Matches { get; set; }
     public List<ResultViewModel>? results { get; set; }
     public AppModal Modal { get; set; }
+    public int MatchId { get; set; }
     public int DeleteID { get; set; }
     [Inject]
     private IToastService ToastService { get; set; }
     protected override async Task OnInitializedAsync()
     {
+        var res = await http.GetFromJsonAsync<BaseResponseModel>("/api/match/items");
+        if (res != null && res.Success)
+        {
+            Matches = JsonConvert.DeserializeObject<List<KeyValuePair<int, string>>>(res.Data.ToString());
+        }
         await base.OnInitializedAsync();
         await LoadData();
     }

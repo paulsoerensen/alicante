@@ -371,6 +371,32 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "Alicante.Controllers.PlayerController",
+    "Method": "GetPlayersForMatch",
+    "RelativePath": "api/Player/match/{matchId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "matchId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Alicante.Client.Models.BaseResponseModel",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
     "ContainingType": "Alicante.Controllers.ResultController",
     "Method": "GetResultList",
     "RelativePath": "api/Result",

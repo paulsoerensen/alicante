@@ -183,3 +183,5 @@ C:\Projects\MensSection\Alicante\Alicante\bin\Debug\net8.0\Microsoft.Extensions.
 C:\Projects\MensSection\Alicante\Alicante\bin\Debug\net8.0\Microsoft.Extensions.Diagnostics.Abstractions.dll
 C:\Projects\MensSection\Alicante\Alicante\bin\Debug\net8.0\Microsoft.Extensions.Http.dll
 C:\Projects\MensSection\Alicante\Alicante\bin\Debug\net8.0\Microsoft.Extensions.Logging.dll
+C:\Projects\MensSection\Alicante\Alicante\obj\Debug\net8.0\Alicante.MvcApplicationPartsAssemblyInfo.cs
+C:\Projects\MensSection\Alicante\Alicante\obj\Debug\net8.0\Alicante.sourcelink.json

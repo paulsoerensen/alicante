@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alicante", "Alicante\Alican
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alicante.Client", "Alicante.Client\Alicante.Client.csproj", "{5AEBC97E-D3AD-444A-87AA-3BC6B24BFC6D}"
 EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "AlicanteData", "..\AlicanteData\AlicanteData.sqlproj", "{37979B4E-ED47-412B-B36C-C89461CC615B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,12 @@ Global
 		{5AEBC97E-D3AD-444A-87AA-3BC6B24BFC6D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5AEBC97E-D3AD-444A-87AA-3BC6B24BFC6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5AEBC97E-D3AD-444A-87AA-3BC6B24BFC6D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{37979B4E-ED47-412B-B36C-C89461CC615B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37979B4E-ED47-412B-B36C-C89461CC615B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37979B4E-ED47-412B-B36C-C89461CC615B}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{37979B4E-ED47-412B-B36C-C89461CC615B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37979B4E-ED47-412B-B36C-C89461CC615B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{37979B4E-ED47-412B-B36C-C89461CC615B}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

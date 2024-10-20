@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Alicante")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+54f3bd467791c26902c55c4949eba5bf310e3ba0")]
 [assembly: System.Reflection.AssemblyProductAttribute("Alicante")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Alicante")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

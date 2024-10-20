@@ -1076,3 +1076,4 @@ C:\Projects\MensSection\Alicante\Alicante.Client\obj\Debug\net8.0\compressed\d38
 C:\Projects\MensSection\Alicante\Alicante.Client\obj\Debug\net8.0\compressed\4332cewwdw.gz
 C:\Projects\MensSection\Alicante\Alicante.Client\obj\Debug\net8.0\compressed\8s4ej6px1v.gz
 C:\Projects\MensSection\Alicante\Alicante.Client\obj\Debug\net8.0\compressed\1u05uiwfo3.gz
+C:\Projects\MensSection\Alicante\Alicante.Client\obj\Debug\net8.0\Alicante.Client.sourcelink.json

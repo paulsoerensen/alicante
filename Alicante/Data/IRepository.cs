@@ -33,5 +33,6 @@ public interface IRepository
     Task<ResultModel> UpsertResult(ResultModel model);
 
     Task<IEnumerable<ResultViewModel>> GetResults();
+    Task<IEnumerable<ResultViewModel>> GetResults(int matchId);
     Task<IEnumerable<ResultViewModel>> ResultFromMatch(int matchId);
 }

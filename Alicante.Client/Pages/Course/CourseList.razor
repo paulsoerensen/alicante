@@ -12,7 +12,7 @@
 }
 else
 {
-    <a class="btn btn-primary" href="/Course/upsert">Opret ny</a>
+    <a class="btn btn-primary" href="/Courseupsert">Opret ny</a>
     <table class="table">
         <thead>
             <tr>
@@ -32,7 +32,7 @@ else
                     <td>@c.CourseRating</td>
                     <td>@c.Slope</td>
                     <td>
-                        <a class="btn btn-secondary" href="/course/upsert/@c.CourseId">Rediger</a>
+                        <a class="btn btn-secondary" href="/courseupsert/@c.CourseId">Rediger</a>
                         <AuthorizeView Roles="Admin">
                             <Authorized>
                                 <button class="btn btn-danger" @onclick="()=> { DeleteID = c.CourseId; Modal.Open();}">Slet</button>

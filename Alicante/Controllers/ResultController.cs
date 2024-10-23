@@ -27,11 +27,11 @@ public class ResultController : BaseController
     }
 
 
-    // GET: api/result/Player
-    [HttpGet]
-    public async Task<ActionResult<BaseResponseModel>> GetResultList()
+    // GET: api/result/match/matchId
+    [HttpGet("match/{matchId}")]
+    public async Task<ActionResult<BaseResponseModel>> GetResultList(int matchId)
     {
-        var models = await _repo.GetResults();
+        var models = await _repo.GetResults(matchId);
         return Ok(new BaseResponseModel { Success = true, Data = models });
     }
 

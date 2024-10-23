@@ -1,30 +1,36 @@
 ﻿@page "/result"
+@page "/result/match/{matchId:int}"
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.AspNetCore.Components.Authorization
 @using Alicante.Client.BaseComponents
 @rendermode @(new InteractiveAutoRenderMode(false))
 
-<h3>Resultat liste</h3>
+<h3>Resultater</h3>
 
-@if (results == null)
+@if (Matches == null)
 {
     <p>Henter ...</p>
 }
-else
-{
+else {
     <RadzenRow AlignItems="AlignItems.Center">
-        <RadzenColumn Size="12" SizeMD="4">
+        <RadzenColumn Size="2" SizeMD="3">
             <RadzenLabel Text="Match" Component="MatchId" />
         </RadzenColumn>
-        <RadzenColumn Size="12" SizeMD="8">
-            <RadzenDropDown @bind-Value="MatchId" AllowClear="true" Placeholder="Vælg match"
-                            Data="@Matches" Style="width: 100%;" 
-                            TextProperty="MatchText" ValueProperty="MatchId" Name="MatchId">
+        <RadzenColumn Size="8" SizeMD="6">
+            <RadzenDropDown @bind-Value="matchId" AllowClear="true" Placeholder="Vælg match"
+                            Data="@Matches" Style="width: 100%;" Change="MatchChanged"
+                            TextProperty="Value" ValueProperty="Key" Name="MatchId">
             </RadzenDropDown>
         </RadzenColumn>
     </RadzenRow>
+}
 
-    <a class="btn btn-primary" href="/result/upsert/matchId">Ny score</a>
+@if (matchId != null)
+{
+    <a class="btn btn-primary" href="/resultupsert/match/@matchId">Nyt resultat</a>
+}
+@if (results != null)
+{
     <table class="table">
         <thead>
             <tr>
@@ -32,6 +38,7 @@ else
                 <th>Hcp</th>
                 <th>Score</th>
                 <th>Birdies</th>
+                <th>Par 3</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -43,8 +50,9 @@ else
                     <td>@p.Hcp</td>
                     <td>@p.Score</td>
                     <td>@p.Birdies</td>
+                    <td>@p.Par3</td>
                     <td>
-                        <a class="btn btn-secondary" href="/result/upsert/@p.MatchId">Rediger</a>
+                        <a class="btn btn-secondary" href="/resultupsert/@p.ResultId">Rediger</a>
                         <AuthorizeView Roles="Admin">
                             <Authorized>
                                 <button class="btn btn-danger" @onclick="()=> { DeleteID = p.MatchId; Modal.Open();}">Slet</button>

@@ -1,3 +1,10 @@
+C:\Projects\MensSection\Alicante\Alicante\obj\Debug\net8.0\Alicante.csproj.AssemblyReference.cache
+C:\Projects\MensSection\Alicante\Alicante\obj\Debug\net8.0\Alicante.GeneratedMSBuildEditorConfig.editorconfig
+C:\Projects\MensSection\Alicante\Alicante\obj\Debug\net8.0\Alicante.AssemblyInfoInputs.cache
+C:\Projects\MensSection\Alicante\Alicante\obj\Debug\net8.0\Alicante.AssemblyInfo.cs
+C:\Projects\MensSection\Alicante\Alicante\obj\Debug\net8.0\Alicante.csproj.CoreCompileInputs.cache
+C:\Projects\MensSection\Alicante\Alicante\obj\Debug\net8.0\Alicante.MvcApplicationPartsAssemblyInfo.cache
+C:\Projects\MensSection\Alicante\Alicante\obj\Debug\net8.0\Alicante.sourcelink.json
 C:\Projects\MensSection\Alicante\Alicante\bin\Debug\net8.0\Alicante.Client.staticwebassets.runtime.json
 C:\Projects\MensSection\Alicante\Alicante\bin\Debug\net8.0\appsettings.Development.json
 C:\Projects\MensSection\Alicante\Alicante\bin\Debug\net8.0\appsettings.json
@@ -160,14 +167,6 @@ C:\Projects\MensSection\Alicante\Alicante\bin\Debug\net8.0\runtimes\win\lib\net6
 C:\Projects\MensSection\Alicante\Alicante\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
 C:\Projects\MensSection\Alicante\Alicante\bin\Debug\net8.0\Alicante.Client.dll
 C:\Projects\MensSection\Alicante\Alicante\bin\Debug\net8.0\Alicante.Client.pdb
-C:\Projects\MensSection\Alicante\Alicante\obj\Debug\net8.0\Alicante.csproj.AssemblyReference.cache
-C:\Projects\MensSection\Alicante\Alicante\obj\Debug\net8.0\Alicante.GeneratedMSBuildEditorConfig.editorconfig
-C:\Projects\MensSection\Alicante\Alicante\obj\Debug\net8.0\Alicante.AssemblyInfoInputs.cache
-C:\Projects\MensSection\Alicante\Alicante\obj\Debug\net8.0\Alicante.AssemblyInfo.cs
-C:\Projects\MensSection\Alicante\Alicante\obj\Debug\net8.0\Alicante.csproj.CoreCompileInputs.cache
-C:\Projects\MensSection\Alicante\Alicante\obj\Debug\net8.0\Alicante.MvcApplicationPartsAssemblyInfo.cs
-C:\Projects\MensSection\Alicante\Alicante\obj\Debug\net8.0\Alicante.MvcApplicationPartsAssemblyInfo.cache
-C:\Projects\MensSection\Alicante\Alicante\obj\Debug\net8.0\Alicante.sourcelink.json
 C:\Projects\MensSection\Alicante\Alicante\obj\Debug\net8.0\staticwebassets.build.json
 C:\Projects\MensSection\Alicante\Alicante\obj\Debug\net8.0\staticwebassets.development.json
 C:\Projects\MensSection\Alicante\Alicante\obj\Debug\net8.0\staticwebassets\msbuild.Alicante.Microsoft.AspNetCore.StaticWebAssets.props
@@ -185,3 +184,4 @@ C:\Projects\MensSection\Alicante\Alicante\obj\Debug\net8.0\refint\Alicante.dll
 C:\Projects\MensSection\Alicante\Alicante\obj\Debug\net8.0\Alicante.pdb
 C:\Projects\MensSection\Alicante\Alicante\obj\Debug\net8.0\Alicante.genruntimeconfig.cache
 C:\Projects\MensSection\Alicante\Alicante\obj\Debug\net8.0\ref\Alicante.dll
+C:\Projects\MensSection\Alicante\Alicante\obj\Debug\net8.0\Alicante.MvcApplicationPartsAssemblyInfo.cs

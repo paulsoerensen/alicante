@@ -32,7 +32,12 @@ public partial class TournamentUpsert
         }
     }
 
-    public async Task Submit()
+    protected void Cancel()
+    {
+        NavigationManager.NavigateTo($"/Tournament/{Id}");
+    }
+
+    public async Task Submit(TournamentModel arg)
     {
         var res = await http.PostAsJsonAsync("/api/Tournament", Model);
         if (res != null && res.IsSuccessStatusCode)

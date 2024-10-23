@@ -1,3 +1,10 @@
+C:\Projects\MensSection\Alicante\Alicante.Client\obj\Debug\net8.0\Alicante.Client.csproj.AssemblyReference.cache
+C:\Projects\MensSection\Alicante\Alicante.Client\obj\Debug\net8.0\Alicante.Client.GeneratedMSBuildEditorConfig.editorconfig
+C:\Projects\MensSection\Alicante\Alicante.Client\obj\Debug\net8.0\Alicante.Client.AssemblyInfoInputs.cache
+C:\Projects\MensSection\Alicante\Alicante.Client\obj\Debug\net8.0\Alicante.Client.AssemblyInfo.cs
+C:\Projects\MensSection\Alicante\Alicante.Client\obj\Debug\net8.0\Alicante.Client.csproj.CoreCompileInputs.cache
+C:\Projects\MensSection\Alicante\Alicante.Client\obj\Debug\net8.0\Alicante.Client.MvcApplicationPartsAssemblyInfo.cache
+C:\Projects\MensSection\Alicante\Alicante.Client\obj\Debug\net8.0\Alicante.Client.sourcelink.json
 C:\Projects\MensSection\Alicante\Alicante.Client\bin\Debug\net8.0\wwwroot\_framework\Alicante.Client.pdb
 C:\Projects\MensSection\Alicante\Alicante.Client\bin\Debug\net8.0\wwwroot\_framework\Alicante.Client.wasm
 C:\Projects\MensSection\Alicante\Alicante.Client\bin\Debug\net8.0\wwwroot\_framework\blazor.boot.json
@@ -639,13 +646,6 @@ C:\Projects\MensSection\Alicante\Alicante.Client\bin\Debug\net8.0\dotnet.runtime
 C:\Projects\MensSection\Alicante\Alicante.Client\bin\Debug\net8.0\icudt_CJK.dat
 C:\Projects\MensSection\Alicante\Alicante.Client\bin\Debug\net8.0\icudt_EFIGS.dat
 C:\Projects\MensSection\Alicante\Alicante.Client\bin\Debug\net8.0\icudt_no_CJK.dat
-C:\Projects\MensSection\Alicante\Alicante.Client\obj\Debug\net8.0\Alicante.Client.csproj.AssemblyReference.cache
-C:\Projects\MensSection\Alicante\Alicante.Client\obj\Debug\net8.0\Alicante.Client.GeneratedMSBuildEditorConfig.editorconfig
-C:\Projects\MensSection\Alicante\Alicante.Client\obj\Debug\net8.0\Alicante.Client.AssemblyInfoInputs.cache
-C:\Projects\MensSection\Alicante\Alicante.Client\obj\Debug\net8.0\Alicante.Client.AssemblyInfo.cs
-C:\Projects\MensSection\Alicante\Alicante.Client\obj\Debug\net8.0\Alicante.Client.csproj.CoreCompileInputs.cache
-C:\Projects\MensSection\Alicante\Alicante.Client\obj\Debug\net8.0\Alicante.Client.MvcApplicationPartsAssemblyInfo.cache
-C:\Projects\MensSection\Alicante\Alicante.Client\obj\Debug\net8.0\Alicante.Client.sourcelink.json
 C:\Projects\MensSection\Alicante\Alicante.Client\obj\Debug\net8.0\webcil\Blazored.Toast.wasm
 C:\Projects\MensSection\Alicante\Alicante.Client\obj\Debug\net8.0\webcil\Microsoft.AspNetCore.Authorization.wasm
 C:\Projects\MensSection\Alicante\Alicante.Client\obj\Debug\net8.0\webcil\Microsoft.AspNetCore.Components.wasm

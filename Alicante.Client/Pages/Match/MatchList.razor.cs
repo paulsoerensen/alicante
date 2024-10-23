@@ -15,6 +15,7 @@ public partial class MatchList
     public int DeleteID { get; set; }
     [Inject]
     private IToastService ToastService { get; set; }
+
     protected override async Task OnInitializedAsync()
     {
         var res = await http.GetFromJsonAsync<BaseResponseModel>("/api/match");

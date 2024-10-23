@@ -12,7 +12,7 @@
 }
 else
 {
-    <a class="btn btn-primary" href="/tournament/upsert">Create</a>
+    <a class="btn btn-primary" href="/tournamentupsert">Create</a>
     <table class="table">
         <thead>
             <tr>
@@ -29,7 +29,7 @@ else
                     <td>@p.Active</td>
 
                     <td>
-                        <a class="btn btn-secondary" href="/tournament/upsert/@p.TournamentId">Rediger</a>
+                        <a class="btn btn-secondary" href="/tournamentupsert/@p.TournamentId">Rediger</a>
                         <AuthorizeView Roles="Admin">
                             <Authorized>
                                 <button class="btn btn-danger" @onclick="()=> { DeleteID = p.TournamentId; Modal.Open();}">Slet</button>

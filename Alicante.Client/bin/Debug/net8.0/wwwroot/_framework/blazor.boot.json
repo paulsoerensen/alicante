@@ -1,7 +1,7 @@
 {
   "mainAssemblyName": "Alicante.Client",
   "resources": {
-    "hash": "sha256-d28VDKxOYazr8v1nhukKw4Cnel51fILD2I1BZNs8yWU=",
+    "hash": "sha256-9I+qlCx2C4Bo/foRgCsDsGGqR7r+m9i22oc7jNQm9yk=",
     "jsModuleNative": {
       "dotnet.native.8.0.8.ymwzv4okkc.js": "sha256-juC5sA7gHTLXFEhAKgdM2/RavswpwCtDfjYGsAz2FXg="
     },
@@ -218,10 +218,10 @@
       "mscorlib.wasm": "sha256-Gz8PyW2/fwihe5ul81OwmRUrU71r+KtbyRw6xlOGD+Q=",
       "netstandard.wasm": "sha256-jMTqIQzoDS810lyhZpMO5eEC36EzntXqSVn+2qwkOMQ=",
       "System.Private.CoreLib.wasm": "sha256-NFj5WE5VLP2LptZIRJCUIc1AMk06FmxpsSILfPISwAw=",
-      "Alicante.Client.wasm": "sha256-CgmzmWckrWZYjHNJibc7o/0/mGKOgKq/trgPxA2+LaU="
+      "Alicante.Client.wasm": "sha256-xeryjpqQvvLgl7SdpZR0Sv3KBiCdxSGY95AaHCf2hCk="
     },
     "pdb": {
-      "Alicante.Client.pdb": "sha256-7uYv18DUd/trjnLdoH1CT9/iL462oJRw7gBxlI/e7OE="
+      "Alicante.Client.pdb": "sha256-/wBLau2ZSqOZlP8/i9m809gYdMakxDfsxoUYrvk65o8="
     }
   },
   "cacheBootResources": true,

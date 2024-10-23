@@ -1,36 +1,29 @@
-﻿@page "/Tournament/upsert/"
-@page "/Tournament/upsert/{id:int}"
+﻿@page "/Tournamentupsert/"
+@page "/Tournamentupsert/{id:int}"
 <h3>Opret/ret Turnering</h3>
 @rendermode @(new InteractiveAutoRenderMode(false))
 
-<EditForm OnValidSubmit="Submit" FormName="TournamentUpsert" Model="Model">
-    <DataAnnotationsValidator />
-    <div class="container">
-        <div class="row mb-3">
-            <div class="col-md-6">
-                <label>Turnerings navn</label>
-                <InputText class="form-control" @bind-Value="Model.TournamentName" />
-                <ValidationMessage For="() => Model.TournamentName" />
-            </div>
-@*          <div class="col-md-6">
-                <label> Quantity</label>
-                <InputNumber class="form-control" @bind-Value="Model.TournamentName" />
-                <ValidationMessage For="() => Model.Quantity" />
-            </div> *@
-        </div>
-
-@*         <div class="row mb-3">
-            <div class="col-md-6">
-                <label> Price</label>
-                <InputNumber class="form-control" @bind-Value="Model.Price" />
-                <ValidationMessage For="() => Model.Price" />
-            </div>
-            <div class="col-md-6">
-                <label> Description</label>
-                <InputText class="form-control" @bind-Value="Model.TournamentName" />
-                <ValidationMessage For="() => Model.Description" />
-            </div>
-        </div> *@
-        <button class="btn btn-secondary" type="submit">Save</button>
-    </div>
-</EditForm>
+<RadzenTemplateForm Data="@Model" Submit="@((TournamentModel args) => { Submit(args); })">
+    <RadzenRow Gap="2rem" class="rz-p-0 rz-p-lg-4">
+        <RadzenColumn Size="12">
+            <RadzenStack>
+                <RadzenFieldset Text="Bane">
+                    <RadzenStack Gap="1rem">
+                        <RadzenRow AlignItems="AlignItems.Center">
+                            <RadzenColumn Size="12" SizeMD="4">
+                                <RadzenLabel Text="Navn" Component="Name" />
+                            </RadzenColumn>
+                            <RadzenColumn Size="12" SizeMD="8">
+                                <RadzenTextBox style="display: block" Name="Name" @bind-Value="@Model.TournamentName" />
+                            </RadzenColumn>
+                        </RadzenRow>
+                    </RadzenStack>
+                </RadzenFieldset>
+            </RadzenStack>
+        </RadzenColumn>
+    </RadzenRow>
+    <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.Center" Gap="1rem" class="rz-mt-8 rz-mb-4">
+        <RadzenButton ButtonType="ButtonType.Submit" Size="ButtonSize.Large" Icon="save" Text="Gem" />
+        <RadzenButton ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Large" Icon="cancel" Text="Fortryd" Click="@Cancel" />
+    </RadzenStack>
+</RadzenTemplateForm>

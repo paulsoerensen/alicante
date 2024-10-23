@@ -32,7 +32,12 @@ public partial class CourseUpsert
         }
     }
 
-    public async Task Submit()
+    protected void Cancel()
+    {
+        NavigationManager.NavigateTo("/Course");
+    }
+
+    public async Task Submit(CourseModel args)
     {
         var res = await http.PostAsJsonAsync("/api/Course", Model);
         if (res != null && res.IsSuccessStatusCode)

@@ -47,12 +47,13 @@ namespace Alicante.Data
 
         public async Task<CourseModel> UpsertCourse(CourseModel model)
         {
-            var sql = "EXEC UpsertCourse @courseId, @courseName, @courseRating, @slope";
+            var sql = "EXEC UpsertCourse @CourseId, @Par, @courseName, @courseRating, @slope";
             using (var connection = CreateConnection())
             {
                 var result = await connection.QuerySingleAsync<CourseModel>(sql, new
                 {
                     model.CourseId,
+                    model.Par,
                     model.CourseName,
                     model.CourseRating,
                     model.Slope
@@ -155,9 +156,8 @@ namespace Alicante.Data
 
         public async Task<IEnumerable<PlayerViewModel>> GetPlayersForMatch(int matchId)
         {
-            var sql = @"SELECT PlayerId, PlayerName, " +
-                "((HcpIndex * Slope /113) + CourseRating - Par) as Hcp" +
-                "FROM dbo.vMatch, Player " +
+            var sql = @"SELECT PlayerId, PlayerName, Hcp " +
+                "FROM dbo.vPlayersForMatch " +
                 "where MatchId = @matchId";
 
             using (IDbConnection db = CreateConnection())
@@ -193,8 +193,6 @@ namespace Alicante.Data
         #endregion Player
 
         #region PlayerMatch
-
-        // INFO: There are no primary keys for the Dapper code generation tool to generate get method(s).
 
         public async Task<IEnumerable<ResultModel>> GetPlayerMatches()
         {
@@ -283,17 +281,17 @@ namespace Alicante.Data
         
         public async Task<ResultModel> UpsertResult(ResultModel model)
         {
-            var sql = "EXEC UpsertResult @ResultId, @PlayerId, @MatchId, @Hcp, @Score, @Birdies";
+            var sql = "EXEC UpsertResult @PlayerId, @MatchId, @Hcp, @Score, @Birdies, @Par3";
             using (var connection = CreateConnection())
             {
                 var result = await connection.QuerySingleAsync<ResultModel>(sql, new
                 {
-                    model.ResultId,
                     model.PlayerId,
                     model.MatchId,
                     model.Hcp,
                     model.Score,
-                    model.Birdies
+                    model.Birdies,
+                    model.Par3
                 });
                 return result;
             }
@@ -310,6 +308,21 @@ namespace Alicante.Data
             using (IDbConnection db = CreateConnection())
             {
                 return await db.QueryAsync<ResultViewModel>(sql);
+            }
+        }
+
+        public async Task<IEnumerable<ResultViewModel>> GetResults(int matchId)
+        {
+            var sql = @"SELECT 
+                ResultId, TournamentId, TournamentName, Active, MatchId, MatchDate, 
+                CourseId, CourseName, CourseRating, Slope, Hcp, Score, 
+                Birdies, PlayerId, PlayerName, HcpIndex
+                FROM dbo.vResult
+                WHERE MatchId = @matchId"
+            ;
+            using (IDbConnection db = CreateConnection())
+            {
+                return await db.QueryAsync<ResultViewModel>(sql, new { matchId });
             }
         }
 

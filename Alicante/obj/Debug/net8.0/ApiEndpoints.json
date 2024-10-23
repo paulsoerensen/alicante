@@ -398,26 +398,6 @@
   },
   {
     "ContainingType": "Alicante.Controllers.ResultController",
-    "Method": "GetResultList",
-    "RelativePath": "api/Result",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": [
-      {
-        "Type": "Alicante.Client.Models.BaseResponseModel",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "Alicante.Controllers.ResultController",
     "Method": "UpsertResult",
     "RelativePath": "api/Result",
     "HttpMethod": "POST",
@@ -483,6 +463,32 @@
       }
     ],
     "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Alicante.Controllers.ResultController",
+    "Method": "GetResultList",
+    "RelativePath": "api/Result/match/{matchId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "matchId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Alicante.Client.Models.BaseResponseModel",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
   },
   {
     "ContainingType": "Alicante.Controllers.TournamentController",

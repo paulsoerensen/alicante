@@ -31,6 +31,10 @@ public partial class PlayerUpsert
             }
         }
     }
+    protected void Cancel()
+    {
+        ;
+    }
 
     public async Task Submit()
     {

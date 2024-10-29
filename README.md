@@ -1,2 +1,0 @@
-# alicante
-Turneringsadministration til Alicante

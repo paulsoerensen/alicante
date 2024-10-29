@@ -1,0 +1,10 @@
+C:\Projects\MensSection\Alicante\AlicanteData\bin\Debug\AlicanteData.dacpac
+C:\Projects\MensSection\Alicante\AlicanteData\bin\Debug\AlicanteData.dll
+C:\Projects\MensSection\Alicante\AlicanteData\bin\Debug\AlicanteData.pdb
+C:\Projects\MensSection\Alicante\AlicanteData\obj\Debug\AlicanteData.sqlproj.AssemblyReference.cache
+C:\Projects\MensSection\Alicante\AlicanteData\obj\Debug\Model.xml
+C:\Projects\MensSection\Alicante\AlicanteData\obj\Debug\refactor.xml
+C:\Projects\MensSection\Alicante\AlicanteData\obj\Debug\postdeploy.sql
+C:\Projects\MensSection\Alicante\AlicanteData\obj\Debug\predeploy.sql
+C:\Projects\MensSection\Alicante\AlicanteData\obj\Debug\AlicanteData.dll
+C:\Projects\MensSection\Alicante\AlicanteData\obj\Debug\AlicanteData.pdb

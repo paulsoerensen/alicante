@@ -1,0 +1,69 @@
+﻿@page "/resultupsert/match/{matchId:int}"
+@page "/resultupsert/{id:int}"
+
+@rendermode @(new InteractiveAutoRenderMode(false))
+
+
+<h3>Registrer resultat</h3>
+@if (players != null)
+{
+    <RadzenTemplateForm Data="@Model" Submit="@((ResultViewModel args) => { Submit(args); })">
+    <RadzenRow Gap="2rem" class="rz-p-0 rz-p-lg-4">
+        <RadzenColumn Size="12">
+            <RadzenStack>
+            <RadzenFieldset Text="Resultat">
+                <RadzenStack  Gap="1rem">
+                    <RadzenRow AlignItems="AlignItems.Center">
+                        <RadzenColumn Size="4" SizeMD="4">
+                                    <RadzenLabel Text="Spiller" Component="PlayerId" />
+                        </RadzenColumn>
+                        <RadzenColumn Size="8" SizeMD="8">
+                            <RadzenDropDown @bind-Value="Model.PlayerId" AllowClear="true" Placeholder="Vælg spiller"
+                                            Data="@players" Style="width: 100%;" Change="PlayerChanged"
+                                            TextProperty="PlayerName" ValueProperty="PlayerId" Name="PlayerId">
+                            </RadzenDropDown>
+                        </RadzenColumn>
+                    </RadzenRow>
+                     <RadzenRow AlignItems="AlignItems.Center" Visible="@EditVisible">
+                        <RadzenColumn Size="12" SizeMD="4">
+                            <RadzenLabel Text="Hcp" Component="Hcp" />
+                        </RadzenColumn>
+                        <RadzenColumn Size="12" SizeMD="8">
+                                <RadzenNumeric Min="0" Max="54" Style="width: 8rem;" Name="Hcp" @bind-Value=@Model.Hcp />
+                        </RadzenColumn>
+                    </RadzenRow>
+                    <RadzenRow AlignItems="AlignItems.Center" Visible="@EditVisible">
+                        <RadzenColumn Size="12" SizeMD="4">
+                            <RadzenLabel Text="Brutto" Component="Score" />
+                        </RadzenColumn>
+                        <RadzenColumn Size="12" SizeMD="8">
+                            <RadzenNumeric Min="80" Max="150" Style="width: 8rem;" Name="Hcp" @bind-Value=@Model.Score />
+                        </RadzenColumn>
+                    </RadzenRow>
+                    <RadzenRow AlignItems="AlignItems.Center" Visible="@EditVisible">
+                        <RadzenColumn Size="12" SizeMD="4">
+                            <RadzenLabel Text="Birdies" Component="Birdies" />
+                        </RadzenColumn>
+                        <RadzenColumn Size="12" SizeMD="8">
+                            <RadzenNumeric Placeholder="0" Min="0" Max="10" Style="width: 8rem;" Name="Birdies" @bind-Value=@Model.Birdies />
+                        </RadzenColumn>
+                    </RadzenRow>
+                    <RadzenRow AlignItems="AlignItems.Center" Visible="@EditVisible">
+                        <RadzenColumn Size="12" SizeMD="4">
+                            <RadzenLabel Text="Par3" Component="Par 3" />
+                        </RadzenColumn>
+                        <RadzenColumn Size="12" SizeMD="8">
+                            <RadzenNumeric Placeholder="0" Min="10" Max="40" Style="width: 8rem;" Name="Par3" @bind-Value=@Model.Par3 />
+                        </RadzenColumn>
+                    </RadzenRow>
+                 </RadzenStack>
+            </RadzenFieldset>
+            </RadzenStack>
+        </RadzenColumn>
+    </RadzenRow>
+    <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.Center" Gap="1rem" class="rz-mt-8 rz-mb-4">
+        <RadzenButton ButtonType="ButtonType.Submit" Size="ButtonSize.Large" Icon="save" Text="Gem" />
+        <RadzenButton ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Large" Icon="cancel" Text="Fortryd" Click="@Cancel" />
+    </RadzenStack>
+</RadzenTemplateForm>
+}

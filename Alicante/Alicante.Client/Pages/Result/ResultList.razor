@@ -1,0 +1,77 @@
+﻿@page "/result"
+@page "/result/match/{matchId:int}"
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Components.Authorization
+@using Alicante.Client.BaseComponents
+@rendermode @(new InteractiveAutoRenderMode(false))
+
+<h3>Resultater</h3>
+
+@if (Matches == null)
+{
+    <p>Henter ...</p>
+}
+else {
+    <RadzenRow AlignItems="AlignItems.Center">
+        <RadzenColumn Size="2" SizeMD="3">
+            <RadzenLabel Text="Match" Component="MatchId" />
+        </RadzenColumn>
+        <RadzenColumn Size="8" SizeMD="6">
+            <RadzenDropDown @bind-Value="matchId" AllowClear="true" Placeholder="Vælg match"
+                            Data="@Matches" Style="width: 100%;" Change="MatchChanged"
+                            TextProperty="Value" ValueProperty="Key" Name="MatchId">
+            </RadzenDropDown>
+        </RadzenColumn>
+    </RadzenRow>
+}
+
+@if (matchId != null)
+{
+    <a class="btn btn-primary" href="/resultupsert/match/@matchId">Nyt resultat</a>
+}
+@if (results != null)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Navn</th>
+                <th>Hcp</th>
+                <th>Score</th>
+                <th>Birdies</th>
+                <th>Par 3</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var p in results)
+            {
+                <tr>
+                    <td>@p.PlayerName</td>
+                    <td>@p.Hcp</td>
+                    <td>@p.Score</td>
+                    <td>@p.Birdies</td>
+                    <td>@p.Par3</td>
+                    <td>
+                        <a class="btn btn-secondary" href="/resultupsert/@p.ResultId">Rediger</a>
+                        <AuthorizeView Roles="Admin">
+                            <Authorized>
+                                <button class="btn btn-danger" @onclick="()=> { DeleteID = p.MatchId; Modal.Open();}">Slet</button>
+                            </Authorized>
+                        </AuthorizeView>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <AppModal @ref="Modal">
+        <Title>Obs</Title>
+        <Body>
+            Vil du slette resultatet?
+        </Body>
+        <Footer>
+            <button type="button" class="btn btn-primary" style="width:80px" @onclick="HandleDelete">Yes</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" @onclick="() => Modal.Close()">Cancel</button>
+        </Footer>
+    </AppModal> 
+}

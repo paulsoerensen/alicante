@@ -1,0 +1,55 @@
+﻿@page "/match"
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Components.Authorization
+@using Alicante.Client.BaseComponents
+@rendermode @(new InteractiveAutoRenderMode(false))
+
+<h3>Match liste</h3>
+
+@if (matches == null)
+{
+    <p>Henter ...</p>
+}
+else
+{
+    <a class="btn btn-primary" href="/match/upsert">Opret ny</a>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Dato</th>
+                <th>Bane</th>
+                <th>2.runde</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var p in matches)
+            {
+                <tr>
+                    <td>@p.MatchDate.ToString("dd MMM, yyyy")</td>
+                    <td>@p.CourseName</td>
+                    <td>@p.SecondRound</td>
+                    <td>
+                        <a class="btn btn-secondary" href="/match/upsert/@p.MatchId">Rediger</a>
+                        <AuthorizeView Roles="Admin">
+                            <Authorized>
+                                <button class="btn btn-danger" @onclick="()=> { DeleteID = p.MatchId; Modal.Open();}">Slet</button>
+                            </Authorized>
+                        </AuthorizeView>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <AppModal @ref="Modal">
+        <Title>Obs</Title>
+        <Body>
+            Vil du slette spilleren?
+        </Body>
+        <Footer>
+            <button type="button" class="btn btn-primary" style="width:80px" @onclick="HandleDelete">Yes</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" @onclick="() => Modal.Close()">Cancel</button>
+        </Footer>
+    </AppModal> 
+}

@@ -1,41 +1,41 @@
 ﻿
-<BSModal @bind-Show="ShowModal">
-    <BSModalHeader>Confirm Delete</BSModalHeader>
-    <BSModalBody>
+<BSModal @bind-Show="ShowModal" IsManual="true" @ref="myModal" Class="custom-modal">
+    <BSModalHeader Class="custom-modal-header">Vil du slette</BSModalHeader>
+    <BSModalContent Class="custom-modal-body">
         @Message
-    </BSModalBody>
-    <BSModalFooter>
-        <Button Color="Color.Secondary" @onclick="CancelDelete">Cancel</Button>
-        <Button Color="Color.Danger" @onclick="ConfirmDelete">Confirm Delete</Button>
+    </BSModalContent>
+    <BSModalFooter  class="custom-modal-footer">
+        <BSButton MarginStart="Margins.Auto" Color="BSColor.Secondary" @onclick="CancelDelete">Nej</BSButton>
+        <BSButton Color="BSColor.Primary" @onclick="ConfirmDelete">Ja</BSButton>
     </BSModalFooter>
 </BSModal>
 
 
 @code {
-    [Parameter] public string Message { get; set; } = "Are you sure you want to delete this item? This action cannot be undone.";
+    private BSModal? myModal { get; set; }
+    [Parameter] public string Message { get; set; } = "Vil du slette.";
     [Parameter] public EventCallback OnDeleteConfirmed { get; set; }
 
     private bool ShowModal { get; set; } = false;
 
-    // Show the dialog
-    public void Show(string message)
+    public async Task Show(string message)
     {
         Message = message;
-        ShowModal = true;
+        await myModal.ShowAsync();
     }
 
     // Close the dialog without taking any action
-    private void CancelDelete()
+    private async Task CancelDelete()
     {
-        ShowModal = false;
+        await myModal.HideAsync();
     }
 
     // Confirm delete action and notify the parent component
     private async Task ConfirmDelete()
     {
-        ShowModal = false;
         if (OnDeleteConfirmed.HasDelegate)
         {
+            await myModal.HideAsync();
             await OnDeleteConfirmed.InvokeAsync(null);
         }
     }

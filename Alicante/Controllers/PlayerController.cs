@@ -66,12 +66,14 @@ public class PlayerController : BaseController
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeletePlayer(int id)
     {
-        int i = await _repo.DeletePlayer(id);
-        if (i == 0)
+        try
         {
-            return NotFound();
+            int i = await _repo.DeletePlayer(id);
+            return Ok(new BaseResponseModel { Success = true });
         }
-
-        return NoContent();
+        catch (Exception e)
+        {
+            return Ok(new BaseResponseModel { Success = false, ErrorMessage = e.Message });
+        }
     }
 }

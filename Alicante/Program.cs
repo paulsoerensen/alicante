@@ -2,6 +2,7 @@ using Alicante.Client.Pages;
 using Alicante.Components;
 using Alicante.Components.Account;
 using Alicante.Data;
+using BlazorStrap;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -14,6 +15,7 @@ using Microsoft.OpenApi.Models;
 using Radzen;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddAutoMapper(typeof(Program));
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
@@ -21,7 +23,7 @@ builder.Services.AddRazorComponents()
     .AddInteractiveWebAssemblyComponents();
 
 builder.Services.AddControllers();
-
+builder.Services.AddBlazorStrap();
 builder.Services.AddCascadingAuthenticationState();
 builder.Services.AddScoped<IdentityUserAccessor>();
 builder.Services.AddScoped<IdentityRedirectManager>(); 

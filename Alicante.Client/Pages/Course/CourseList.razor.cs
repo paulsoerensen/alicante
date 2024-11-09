@@ -59,10 +59,6 @@ public partial class CourseList
     void OnUpdateRow(CourseModel course)
     {
         Reset(course);
-
-        //dbContext.Update(course);
-
-        //dbContext.SaveChanges();
     }
 
     async Task SaveRow(CourseModel course)
@@ -75,13 +71,6 @@ public partial class CourseList
         Reset(course);
 
         coursesGrid.CancelEditRow(course);
-
-        //var courseEntry = dbContext.Entry(course);
-        //if (courseEntry.State == EntityState.Modified)
-        //{
-        //    courseEntry.CurrentValues.SetValues(courseEntry.OriginalValues);
-        //    courseEntry.State = EntityState.Unchanged;
-        //}
     }
 
     async Task DeleteRow(CourseModel course)

@@ -2,60 +2,7 @@
 
 @inject NavigationManager NavigationManager
 
-
-<BSNavbar Color="BSColor.Light" IsFixedTop=true>
-    <div class="container-fluid">
-        <BSNavbarBrand Url="#">Alicante</BSNavbarBrand>
-        <BSCollapse IsInNavbar="true">
-            <Toggler>
-                <BSNavbarToggle />
-            </Toggler>
-            <Content>
-                <BSNav MarginEnd="Margins.Auto" MarginBottom="Margins.Small" Class="mb-lg-0">
-                    <BSNavItem Url="tournament">Turneringer</BSNavItem>
-                    <BSNavItem Url="player">Spillere</BSNavItem>
-                    <BSNavItem Url="course">Baner</BSNavItem>
-                    <BSNavItem Url="match">Matcher</BSNavItem>
-                    <BSNavItem Url="result">Resultater</BSNavItem>
-                    @*                     <AuthorizeView Roles="@AppRoles.Admin">
-                        <BSNavItem Url="preconditions">Preconditions</BSNavItem>
-                        <BSNavItem Url="logging">Logging</BSNavItem>
-                        <BSNavItem Url="admin">Admin</BSNavItem>
-                    </AuthorizeView> *@
-                </BSNav>
-            </Content>
-        </BSCollapse>
-        @if (activeTournament != null) {
-            <BSNavbarBrand class="d-flex">@activeTournament.TournamentName</BSNavbarBrand>
-        }
-        else
-        {
-            <BSNavbarBrand class="d-flex">- ingen aktuel turnering -</BSNavbarBrand>
-        }
-        <div class="d-flex">
-            <AuthorizeView Context="AuthenticationState">
-                <div class="navbar-text">
-                    @AuthenticationState?.User?.Identity?.Name
-                    <AuthorizeView Roles="Admin">
-                        <Authorized>
-                            (Admin)
-                        </Authorized>
-                        <NotAuthorized>
-                            (Read Only)
-                        </NotAuthorized>
-                    </AuthorizeView>
-                </div>
-            </AuthorizeView>
-@*             <LoginDisplay></LoginDisplay>
- *@        </div>
-    </div>
-</BSNavbar>
-
-@code {
-
-}
-
-@* <div class="top-row ps-3 navbar navbar-dark">
+<div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="">Alicante</a>
     </div>
@@ -122,14 +69,14 @@
             <NavLink class="nav-link" href="result">
                 <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span>Resultater
             </NavLink>
-        </div> *@
+        </div>
 @*         <div class="nav-item px-3">
             <NavLink class="nav-link" href="auth">
                 <span class="bi bi-lock-nav-menu" aria-hidden="true"></span> Auth Required
             </NavLink>
         </div>
  *@
-@*         <AuthorizeView>
+        <AuthorizeView>
             <Authorized>
                 <div class="nav-item px-3">
                     <NavLink class="nav-link" href="Account/Manage">
@@ -160,5 +107,26 @@
             </NotAuthorized>
         </AuthorizeView>
     </nav>
-</div> *@
+</div>
+
+@code {
+    private string? currentUrl;
+
+    protected override void OnInitialized()
+    {
+        currentUrl = NavigationManager.ToBaseRelativePath(NavigationManager.Uri);
+        NavigationManager.LocationChanged += OnLocationChanged;
+    }
+
+    private void OnLocationChanged(object? sender, LocationChangedEventArgs e)
+    {
+        currentUrl = NavigationManager.ToBaseRelativePath(e.Location);
+        StateHasChanged();
+    }
+
+    public void Dispose()
+    {
+        NavigationManager.LocationChanged -= OnLocationChanged;
+    }
+}
 

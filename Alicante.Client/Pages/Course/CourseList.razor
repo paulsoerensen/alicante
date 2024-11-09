@@ -12,64 +12,20 @@
 }
 else
 {
-@*     <a class="btn btn-primary" href="/Courseupsert">Opret ny</a>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Navn</th>
-                <th>Par</th>
-                <th>Course rating</th>
-                <th>Slope</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var c in courses)
-            {
-                <tr>
-                    <td>@c.CourseName</td>
-                    <td>@c.Par</td>
-                    <td>@c.CourseRating</td>
-                    <td>@c.Slope</td>
-                    <td>
-                        <a class="btn btn-secondary" href="/courseupsert/@c.CourseId">Rediger</a>
-                        <AuthorizeView Roles="Admin">
-                            <Authorized>
-                                <button class="btn btn-danger" @onclick="()=> { DeleteID = c.CourseId; Modal.Open();}">Slet</button>
-                            </Authorized>
-                        </AuthorizeView>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-
-    <AppModal @ref="Modal">
-        <Title>Obs</Title>
-        <Body>
-            Vil du slette banen?
-        </Body>
-        <Footer>
-            <button type="button" class="btn btn-primary" style="width:80px" @onclick="HandleDelete">Yes</button>
-            <button type="button" class="btn btn-secondary" data-dismiss="modal" @onclick="() => Modal.Close()">Cancel</button>
-        </Footer>
-    </AppModal> 
- *@
-
  <RadzenDataGrid @ref="coursesGrid" AllowAlternatingRows="false" EditMode="DataGridEditMode.Single"
-                    Data="@courses" TItem="CourseModel" RowUpdate="@OnUpdateRow" RowCreate="@OnCreateRow" Sort="@Reset" Page="@Reset" Filter="@Reset" ColumnWidth="200px">
+                    Data="@courses" TItem="CourseModel" RowUpdate="@OnUpdateRow" RowCreate="@OnCreateRow" Sort="@Reset" Page="@Reset" Filter="@Reset">
     <HeaderTemplate>
         <RadzenButton ButtonStyle="ButtonStyle.Success" Icon="add_circle" Text="Ny bane" Click="@InsertRow" Disabled="@(coursesToInsert.Count() > 0)" />
     </HeaderTemplate>
     <Columns>
  
-        <RadzenDataGridColumn Property="@nameof(CourseModel.CourseName)" CssClass="col-md-auto" Title="Bane navn" Frozen="true">
+        <RadzenDataGridColumn Property="@nameof(CourseModel.CourseName)" CssClass="col6" Title="Bane navn" Frozen="true">
             <EditTemplate Context="course">
-                    <RadzenTextBox @bind-Value="course.CourseName" Style="width:200px; display: block" Name="CourseName" aria-label="Bane navn" />
+                    <RadzenTextBox @bind-Value="course.CourseName" Style="width:200px; display: block" Name="CourseName" />
                     <RadzenRequiredValidator Text="Skal have et navn" Component="CourseName" Popup="true" />
             </EditTemplate>
-        </RadzenDataGridColumn>
 
+        </RadzenDataGridColumn>
             <RadzenDataGridColumn Property="@nameof(CourseModel.Par)" Title="Par" TextAlign="TextAlign.Center" CssClass="col">
             <Template Context="course">
                @course.Par.ToString("D2")
@@ -97,7 +53,7 @@ else
             </EditTemplate>
         </RadzenDataGridColumn>
 
-        <RadzenDataGridColumn Context="course" CssClass="col-sm-auto" TextAlign="TextAlign.Right" Frozen="true" FrozenPosition="FrozenColumnPosition.Right">
+        <RadzenDataGridColumn Context="course" Width="160px" TextAlign="TextAlign.Right" Frozen="true" FrozenPosition="FrozenColumnPosition.Right">
             <Template Context="course">
                 <RadzenButton Icon="edit" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Medium" Click="@(args => EditRow(course))" @onclick:stopPropagation="true">
                 </RadzenButton>

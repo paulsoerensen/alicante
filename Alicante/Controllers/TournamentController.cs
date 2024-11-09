@@ -51,15 +51,27 @@ public class TournamentController : BaseController
         }
     }
 
+    // POST: api/Tournament
+    [HttpPost("active")]
+    public async Task<ActionResult<BaseResponseModel>> SetActiveTournament([FromBody]int id)
+    {
+        var r = Request.Body;
+        try
+        {
+            var newModel = await _repo.SetActiveTournament(id);
+            return Ok(new BaseResponseModel { Success = true });
+        }
+        catch (Exception e)
+        {
+            return Ok(new BaseResponseModel { Success = false, ErrorMessage = e.Message });
+        }
+    }
+
     // DELETE: api/Tournament/5
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteTournament(int id)
     {
         int i = await _repo.DeleteTournament( id );
-        if (i == 0)
-        {
-            return NotFound();
-        }
         return NoContent();
     }
 }

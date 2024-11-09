@@ -1,0 +1,42 @@
+﻿
+<BSModal @bind-Show="ShowModal">
+    <BSModalHeader>Confirm Delete</BSModalHeader>
+    <BSModalBody>
+        @Message
+    </BSModalBody>
+    <BSModalFooter>
+        <Button Color="Color.Secondary" @onclick="CancelDelete">Cancel</Button>
+        <Button Color="Color.Danger" @onclick="ConfirmDelete">Confirm Delete</Button>
+    </BSModalFooter>
+</BSModal>
+
+
+@code {
+    [Parameter] public string Message { get; set; } = "Are you sure you want to delete this item? This action cannot be undone.";
+    [Parameter] public EventCallback OnDeleteConfirmed { get; set; }
+
+    private bool ShowModal { get; set; } = false;
+
+    // Show the dialog
+    public void Show(string message)
+    {
+        Message = message;
+        ShowModal = true;
+    }
+
+    // Close the dialog without taking any action
+    private void CancelDelete()
+    {
+        ShowModal = false;
+    }
+
+    // Confirm delete action and notify the parent component
+    private async Task ConfirmDelete()
+    {
+        ShowModal = false;
+        if (OnDeleteConfirmed.HasDelegate)
+        {
+            await OnDeleteConfirmed.InvokeAsync(null);
+        }
+    }
+}

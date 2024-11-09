@@ -81,7 +81,7 @@ namespace Alicante.Data
             using (IDbConnection db = CreateConnection())
             {
                 const string query = "SELECT TournamentId, MatchId, MatchDate, CourseId, CourseName, " +
-                                        "CourseRating, Slope, Par, SecondRound " +
+                                        "CourseRating, Slope, Par " +
                                         "FROM dbo.vMatch " +
                                         "WHERE MatchId = @matchId";
                 return await db.QuerySingleAsync<MatchModel>(query, new { matchId });
@@ -94,7 +94,7 @@ namespace Alicante.Data
             {
                 const string query = @"SELECT TournamentId, TournamentName, Active, " +
                     "                   MatchId, MatchDate, CourseId, CourseName, " +
-                                        "CourseRating, Slope, Par, SecondRound " +
+                                        "CourseRating, Slope, Par " +
                                         "FROM dbo.vMatch " +
                                         "where Active = 1";
 
@@ -104,18 +104,17 @@ namespace Alicante.Data
         }
         public async Task<MatchModel> UpsertMatch(MatchModel match)
         {
-            var sql = "EXEC UpsertMatch @MatchId, @MatchDate, @CourseId, @TournamentId, @SecondRound";
+            var sql = "EXEC UpsertMatch @MatchId, @MatchDate, @CourseId, @TournamentId";
             using (var connection = CreateConnection())
             {
-                var result = await connection.QuerySingleAsync<MatchModel>(sql, new
+                var result = await connection.QueryAsync<MatchModel>(sql, new
                 {
                     match.MatchId,
                     match.MatchDate,
                     match.CourseId,
-                    match.TournamentId,
-                    match.SecondRound
+                    match.TournamentId
                 });
-                return result;
+                return result!.SingleOrDefault<MatchModel>();
             }
         }
 
@@ -156,7 +155,7 @@ namespace Alicante.Data
 
         public async Task<IEnumerable<PlayerViewModel>> GetPlayersForMatch(int matchId)
         {
-            var sql = @"SELECT PlayerId, PlayerName, Hcp " +
+            var sql = @"SELECT PlayerId, PlayerName, ResultId, Hcp " +
                 "FROM dbo.vPlayersForMatch " +
                 "where MatchId = @matchId";
 
@@ -207,9 +206,27 @@ namespace Alicante.Data
         {
             using (IDbConnection db = CreateConnection())
             {
-                const string findAllQuery = "SELECT TournamentId, TournamentName FROM Tournament";
+                const string findAllQuery = "SELECT TournamentId, TournamentName, Active FROM Tournament";
                 var results = await db.QueryAsync<TournamentModel>(findAllQuery);
                 return results;
+            }
+        }
+
+        public async Task<TournamentModel?> GetAciveTournament()
+        {
+            using (IDbConnection db = CreateConnection())
+            {
+                const string query = "SELECT TournamentId, TournamentName, Active FROM Tournament where Active=1";
+                try
+                {
+                    var result = await db.QuerySingleAsync<TournamentModel>(query);
+                    return result;
+                }
+                catch (InvalidOperationException)
+                {
+                    // Handle case where no active tournament is found or more than one record is returned
+                    return null; // or default action
+                }
             }
         }
 
@@ -227,12 +244,24 @@ namespace Alicante.Data
                 return result;
             }
         }
+        public async Task<int> SetActiveTournament(int id)
+        {
+            var sql = "update Tournament set Active=0";
+            using (var connection = CreateConnection())
+            {
+                var result = await connection.ExecuteAsync(sql);
+                sql = "update Tournament set Active=1 where TournamentId = @id";
+                result = await connection.ExecuteAsync(sql, new { id });
+                return result;
+            }
+        }
+
 
         public async Task<int> DeleteTournament(int tournamentId)
         {
             using (IDbConnection db = CreateConnection())
             {
-                const string deleteQuery = "DELETE Player WHERE TournamentId = @tournamentId";
+                const string deleteQuery = "DELETE Tournament WHERE TournamentId = @tournamentId";
                 var rowsAffected = await db.ExecuteScalarAsync<int>(deleteQuery, new { tournamentId });
                 return rowsAffected;
             }
@@ -310,6 +339,15 @@ namespace Alicante.Data
             }
         }
 
+        public async Task<int> DeleteResult(int resultId)
+        {
+            using (IDbConnection db = CreateConnection())
+            {
+                const string deleteQuery = "DELETE Result WHERE ResultId = @resultId";
+                var rowsAffected = await db.ExecuteScalarAsync<int>(deleteQuery, new { resultId });
+                return rowsAffected;
+            }
+        }
         #endregion
     }
 }

@@ -12,9 +12,7 @@
         public decimal CourseRating { get; set; }
         public int Slope { get; set; }
         public int Par { get; set; }
-        public bool SecondRound { get; set; }
-
-        public string MatchText => $"{CourseName} {MatchDate:dd MMM, yyyy} {(SecondRound ? "(2)" : string.Empty)}";
+        public string MatchText => $"{CourseName} {MatchDate:dd MMM, yyyy}";
 
     }
 }

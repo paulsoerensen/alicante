@@ -68,11 +68,14 @@ public class MatchController : BaseController
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteMatch(int id)
     {
-        int i = await _repo.DeleteMatch( id );
-        if (i == 0)
-        {
-            return NotFound();
+        try 
+        { 
+            int i = await _repo.DeleteMatch( id );
+            return Ok(new BaseResponseModel { Success = true});
         }
-        return NoContent();
+        catch (Exception e)
+        {
+            return Ok(new BaseResponseModel { Success = false, ErrorMessage = e.Message});
+        }
     }
 }

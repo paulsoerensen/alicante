@@ -27,6 +27,8 @@ public interface IRepository
     Task<TournamentModel> GetTournament(int tournamentId);
     Task<IEnumerable<TournamentModel>> GetTournaments();
     Task<TournamentModel> UpsertTournament(TournamentModel model);
+    Task<int> SetActiveTournament(int id);
+    Task<TournamentModel?> GetAciveTournament();
     Task<int> DeleteTournament(int tournamentId);
 
     Task<ResultModel> GetResult(int id);
@@ -35,4 +37,6 @@ public interface IRepository
     Task<IEnumerable<ResultViewModel>> GetResults();
     Task<IEnumerable<ResultViewModel>> GetResults(int matchId);
     Task<IEnumerable<ResultViewModel>> ResultFromMatch(int matchId);
+    Task<int> DeleteResult(int resultId);
+
 }

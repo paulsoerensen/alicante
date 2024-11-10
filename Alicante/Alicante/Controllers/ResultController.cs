@@ -1,6 +1,8 @@
 ﻿using Alicante.Client.Models;
 using Alicante.Data;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 
 namespace Alicante.Controllers;
@@ -10,8 +12,10 @@ namespace Alicante.Controllers;
 [ApiController]
 public class ResultController : BaseController
 {
-    public ResultController(IRepository repository) : base(repository)
+    public ResultController(IRepository repository,
+                            IMapper mapper) : base(repository)
     {
+        _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
     }
 
     // GET: api/Result/5
@@ -31,8 +35,15 @@ public class ResultController : BaseController
     [HttpGet("match/{matchId}")]
     public async Task<ActionResult<BaseResponseModel>> GetResultList(int matchId)
     {
-        var models = await _repo.GetResults(matchId);
-        return Ok(new BaseResponseModel { Success = true, Data = models });
+        try
+        {
+            var models = await _repo.GetResults(matchId);
+            return Ok(new BaseResponseModel { Success = true, Data = models });
+        }
+        catch (Exception e)
+        {
+            return Ok(new BaseResponseModel { Success = false, ErrorMessage = e.Message});
+        }
     }
 
     // POST: api/result
@@ -56,14 +67,16 @@ public class ResultController : BaseController
 
     // DELETE: api/Match/5
     [HttpDelete("{id}")]
-    public async Task<IActionResult> DeletePlayer(int id)
+    public async Task<IActionResult> DeleteResult(int id)
     {
-        int i = await _repo.DeletePlayer(id);
-        if (i == 0)
-        {
-            return NotFound();
+        try 
+        { 
+            int i = await _repo.DeleteResult(id);
+            return Ok(new BaseResponseModel { Success = true });
         }
-
-        return NoContent();
+        catch (Exception e)
+        {
+            return Ok(new BaseResponseModel { Success = false, ErrorMessage = e.Message});
+        }
     }
 }

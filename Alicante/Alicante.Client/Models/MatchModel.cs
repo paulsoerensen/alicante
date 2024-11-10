@@ -6,6 +6,5 @@
         public DateTime MatchDate { get; set; }
         public int CourseId { get; set; }
         public int TournamentId { get; set; }
-        public bool SecondRound { get; set; }
     }
 }

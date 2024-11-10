@@ -24,7 +24,7 @@ namespace Alicante.Data
         #region Course
 
         private const string courseSelect = @"SELECT [CourseId],[CourseName],[CourseRating],[Slope] 
-                                                FROM Course";
+                                                FROM al.Course";
 
         public async Task<CourseModel> GetCourse(int courseId)
         {
@@ -47,7 +47,7 @@ namespace Alicante.Data
 
         public async Task<CourseModel> UpsertCourse(CourseModel model)
         {
-            var sql = "EXEC UpsertCourse @CourseId, @Par, @courseName, @courseRating, @slope";
+            var sql = "EXEC al.UpsertCourse @CourseId, @Par, @courseName, @courseRating, @slope";
             using (var connection = CreateConnection())
             {
                 var result = await connection.QuerySingleAsync<CourseModel>(sql, new
@@ -66,7 +66,7 @@ namespace Alicante.Data
         {
             using (IDbConnection db = CreateConnection())
             {
-                const string deleteQuery = "DELETE Course WHERE CourseId = @courseId";
+                const string deleteQuery = "DELETE al.Course WHERE CourseId = @courseId";
                 var rowsAffected = await db.ExecuteScalarAsync<int>(deleteQuery, new { courseId });
                 return rowsAffected;
             }
@@ -81,8 +81,8 @@ namespace Alicante.Data
             using (IDbConnection db = CreateConnection())
             {
                 const string query = "SELECT TournamentId, MatchId, MatchDate, CourseId, CourseName, " +
-                                        "CourseRating, Slope, Par, SecondRound " +
-                                        "FROM dbo.vMatch " +
+                                        "CourseRating, Slope, Par " +
+                                        "FROM al.vMatch " +
                                         "WHERE MatchId = @matchId";
                 return await db.QuerySingleAsync<MatchModel>(query, new { matchId });
             }
@@ -94,8 +94,8 @@ namespace Alicante.Data
             {
                 const string query = @"SELECT TournamentId, TournamentName, Active, " +
                     "                   MatchId, MatchDate, CourseId, CourseName, " +
-                                        "CourseRating, Slope, Par, SecondRound " +
-                                        "FROM dbo.vMatch " +
+                                        "CourseRating, Slope, Par " +
+                                        "FROM al.vMatch " +
                                         "where Active = 1";
 
                 var results = await db.QueryAsync<MatchViewModel>(query);
@@ -104,18 +104,17 @@ namespace Alicante.Data
         }
         public async Task<MatchModel> UpsertMatch(MatchModel match)
         {
-            var sql = "EXEC UpsertMatch @MatchId, @MatchDate, @CourseId, @TournamentId, @SecondRound";
+            var sql = "EXEC al.UpsertMatch @MatchId, @MatchDate, @CourseId, @TournamentId";
             using (var connection = CreateConnection())
             {
-                var result = await connection.QuerySingleAsync<MatchModel>(sql, new
+                var result = await connection.QueryAsync<MatchModel>(sql, new
                 {
                     match.MatchId,
                     match.MatchDate,
                     match.CourseId,
-                    match.TournamentId,
-                    match.SecondRound
+                    match.TournamentId
                 });
-                return result;
+                return result!.SingleOrDefault<MatchModel>();
             }
         }
 
@@ -123,7 +122,7 @@ namespace Alicante.Data
         {
             using (IDbConnection db = CreateConnection())
             {
-                const string deleteQuery = "DELETE Match WHERE MatchId = @matchId";
+                const string deleteQuery = "DELETE al.Match WHERE MatchId = @matchId";
                 var rowsAffected = await db.ExecuteScalarAsync<int>(deleteQuery, new { matchId });
                 return rowsAffected;
             }
@@ -139,7 +138,7 @@ namespace Alicante.Data
         {
             using (IDbConnection db = CreateConnection())
             {
-                const string getQuery = "SELECT * FROM Player WHERE PlayerId = @playerId";
+                const string getQuery = "SELECT * FROM al.Player WHERE PlayerId = @playerId";
                 return await db.QuerySingleAsync<PlayerModel>(getQuery, new { playerId });
             }
         }
@@ -148,7 +147,7 @@ namespace Alicante.Data
         {
             using (IDbConnection db = CreateConnection())
             {
-                const string findAllQuery = "SELECT * FROM Player";
+                const string findAllQuery = "SELECT * FROM al.Player";
                 var results = await db.QueryAsync<PlayerModel>(findAllQuery);
                 return results;
             }
@@ -156,8 +155,8 @@ namespace Alicante.Data
 
         public async Task<IEnumerable<PlayerViewModel>> GetPlayersForMatch(int matchId)
         {
-            var sql = @"SELECT PlayerId, PlayerName, Hcp " +
-                "FROM dbo.vPlayersForMatch " +
+            var sql = @"SELECT PlayerId, PlayerName, ResultId, Hcp " +
+                "FROM al.vPlayersForMatch " +
                 "where MatchId = @matchId";
 
             using (IDbConnection db = CreateConnection())
@@ -168,7 +167,7 @@ namespace Alicante.Data
 
         public async Task<PlayerModel> UpsertPlayer(PlayerModel player)
         {
-            var sql = "EXEC UpsertPlayer @PlayerId, @PlayerName, @HcpIndex";
+            var sql = "EXEC al.UpsertPlayer @PlayerId, @PlayerName, @HcpIndex";
             using (var connection = CreateConnection())
             {
                 var result = await connection.QuerySingleAsync<PlayerModel>(sql, new
@@ -185,7 +184,7 @@ namespace Alicante.Data
         {
             using (IDbConnection db = CreateConnection())
             {
-                const string deleteQuery = "DELETE Player WHERE PlayerId = @playerId";
+                const string deleteQuery = "DELETE al.Player WHERE PlayerId = @playerId";
                 var rowsAffected = await db.ExecuteScalarAsync<int>(deleteQuery, new { playerId });
                 return rowsAffected;
             }
@@ -198,7 +197,7 @@ namespace Alicante.Data
         {
             using (IDbConnection db = CreateConnection())
             {
-                const string getQuery = "SELECT TournamentId, TournamentName FROM Tournament WHERE TournamentId = @tournamentId";
+                const string getQuery = "SELECT TournamentId, TournamentName FROM al.Tournament WHERE TournamentId = @tournamentId";
                 return await db.QuerySingleAsync<TournamentModel>(getQuery, new { tournamentId });
             }
         }
@@ -207,15 +206,33 @@ namespace Alicante.Data
         {
             using (IDbConnection db = CreateConnection())
             {
-                const string findAllQuery = "SELECT TournamentId, TournamentName FROM Tournament";
+                const string findAllQuery = "SELECT TournamentId, TournamentName, Active FROM al.Tournament";
                 var results = await db.QueryAsync<TournamentModel>(findAllQuery);
                 return results;
             }
         }
 
+        public async Task<TournamentModel?> GetAciveTournament()
+        {
+            using (IDbConnection db = CreateConnection())
+            {
+                const string query = "SELECT TournamentId, TournamentName, Active FROM al.Tournament where Active=1";
+                try
+                {
+                    var result = await db.QuerySingleAsync<TournamentModel>(query);
+                    return result;
+                }
+                catch (InvalidOperationException)
+                {
+                    // Handle case where no active tournament is found or more than one record is returned
+                    return null; // or default action
+                }
+            }
+        }
+
         public async Task<TournamentModel> UpsertTournament(TournamentModel model)
         {
-            var sql = "EXEC UpsertTournament @TournamentId, @TournamentName, @Active";
+            var sql = "EXEC al.UpsertTournament @TournamentId, @TournamentName, @Active";
             using (var connection = CreateConnection())
             {
                 var result = await connection.QuerySingleAsync<TournamentModel>(sql, new
@@ -227,12 +244,24 @@ namespace Alicante.Data
                 return result;
             }
         }
+        public async Task<int> SetActiveTournament(int id)
+        {
+            var sql = "update al.Tournament set Active=0";
+            using (var connection = CreateConnection())
+            {
+                var result = await connection.ExecuteAsync(sql);
+                sql = "update al.Tournament set Active=1 where TournamentId = @id";
+                result = await connection.ExecuteAsync(sql, new { id });
+                return result;
+            }
+        }
+
 
         public async Task<int> DeleteTournament(int tournamentId)
         {
             using (IDbConnection db = CreateConnection())
             {
-                const string deleteQuery = "DELETE Player WHERE TournamentId = @tournamentId";
+                const string deleteQuery = "DELETE al.Tournament WHERE TournamentId = @tournamentId";
                 var rowsAffected = await db.ExecuteScalarAsync<int>(deleteQuery, new { tournamentId });
                 return rowsAffected;
             }
@@ -244,14 +273,14 @@ namespace Alicante.Data
         {
             using (IDbConnection db = CreateConnection())
             {
-                const string getQuery = "SELECT ResultId,PlayerId,MatchId,Hcp,Score,Birdies FROM Result WHERE ResultId = @id";
+                const string getQuery = "SELECT ResultId,PlayerId,MatchId,Hcp,Score,Birdies FROM al.Result WHERE ResultId = @id";
                 return await db.QuerySingleAsync<ResultModel>(getQuery, new { id });
             }
         }
         
         public async Task<ResultModel> UpsertResult(ResultModel model)
         {
-            var sql = "EXEC UpsertResult @PlayerId, @MatchId, @Hcp, @Score, @Birdies, @Par3";
+            var sql = "EXEC al.UpsertResult @PlayerId, @MatchId, @Hcp, @Score, @Birdies, @Par3";
             using (var connection = CreateConnection())
             {
                 var result = await connection.QuerySingleAsync<ResultModel>(sql, new
@@ -273,8 +302,8 @@ namespace Alicante.Data
                 TournamentId, TournamentName, Active, MatchId, MatchDate, 
                 CourseId, CourseName, CourseRating, Slope, Hcp, Score, 
                 Birdies, PlayerId, PlayerName, HcpIndex
-            FROM dbo.vResult"
-            ;
+            FROM al.vResult";
+
             using (IDbConnection db = CreateConnection())
             {
                 return await db.QueryAsync<ResultViewModel>(sql);
@@ -287,7 +316,7 @@ namespace Alicante.Data
                 ResultId, TournamentId, TournamentName, Active, MatchId, MatchDate, 
                 CourseId, CourseName, CourseRating, Slope, Hcp, Score, 
                 Birdies, PlayerId, PlayerName, HcpIndex, Par3
-                FROM dbo.vResult
+                FROM al.vResult
                 WHERE MatchId = @matchId"
             ;
             using (IDbConnection db = CreateConnection())
@@ -302,7 +331,7 @@ namespace Alicante.Data
                 TournamentId, TournamentName, Active, MatchId, MatchDate, 
                 CourseId, CourseName, CourseRating, Slope, Hcp, Score, 
                 Birdies, PlayerId, Name AS PlayerName, HcpIndex
-            FROM dbo.vPlayerMatch WHERE MatchId = @matchId"
+            FROM al.vPlayerMatch WHERE MatchId = @matchId"
             ;
             using (IDbConnection db = CreateConnection())
             {
@@ -310,6 +339,15 @@ namespace Alicante.Data
             }
         }
 
+        public async Task<int> DeleteResult(int resultId)
+        {
+            using (IDbConnection db = CreateConnection())
+            {
+                const string deleteQuery = "DELETE al.Result WHERE ResultId = @resultId";
+                var rowsAffected = await db.ExecuteScalarAsync<int>(deleteQuery, new { resultId });
+                return rowsAffected;
+            }
+        }
         #endregion
     }
 }

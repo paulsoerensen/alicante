@@ -2,7 +2,60 @@
 
 @inject NavigationManager NavigationManager
 
-<div class="top-row ps-3 navbar navbar-dark">
+
+<BSNavbar Color="BSColor.Light" IsFixedTop=true>
+    <div class="container-fluid">
+        <BSNavbarBrand Url="#">Alicante</BSNavbarBrand>
+        <BSCollapse IsInNavbar="true">
+            <Toggler>
+                <BSNavbarToggle />
+            </Toggler>
+            <Content>
+                <BSNav MarginEnd="Margins.Auto" MarginBottom="Margins.Small" Class="mb-lg-0">
+                    <BSNavItem Url="tournament">Turneringer</BSNavItem>
+                    <BSNavItem Url="player">Spillere</BSNavItem>
+                    <BSNavItem Url="course">Baner</BSNavItem>
+                    <BSNavItem Url="match">Matcher</BSNavItem>
+                    <BSNavItem Url="result">Resultater</BSNavItem>
+                    @*                     <AuthorizeView Roles="@AppRoles.Admin">
+                        <BSNavItem Url="preconditions">Preconditions</BSNavItem>
+                        <BSNavItem Url="logging">Logging</BSNavItem>
+                        <BSNavItem Url="admin">Admin</BSNavItem>
+                    </AuthorizeView> *@
+                </BSNav>
+            </Content>
+        </BSCollapse>
+        @if (activeTournament != null) {
+            <BSNavbarBrand class="d-flex">@activeTournament.TournamentName</BSNavbarBrand>
+        }
+        else
+        {
+            <BSNavbarBrand class="d-flex">- ingen aktuel turnering -</BSNavbarBrand>
+        }
+        <div class="d-flex">
+            <AuthorizeView Context="AuthenticationState">
+                <div class="navbar-text">
+                    @AuthenticationState?.User?.Identity?.Name
+                    <AuthorizeView Roles="Admin">
+                        <Authorized>
+                            (Admin)
+                        </Authorized>
+                        <NotAuthorized>
+                            (Read Only)
+                        </NotAuthorized>
+                    </AuthorizeView>
+                </div>
+            </AuthorizeView>
+@*             <LoginDisplay></LoginDisplay>
+ *@        </div>
+    </div>
+</BSNavbar>
+
+@code {
+
+}
+
+@* <div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="">Alicante</a>
     </div>
@@ -11,16 +64,37 @@
 <input type="checkbox" title="Navigation menu" class="navbar-toggler" />
 
 <div class="nav-scrollable" onclick="document.querySelector('.navbar-toggler').click()">
+
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Navbar</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Link</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+                    </li>
+                </ul>
+                <form class="d-flex" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+
     <nav class="flex-column">
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
                 <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Home
-            </NavLink>
-        </div>
-
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="counter">
-                <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> Counter
             </NavLink>
         </div>
 
@@ -48,20 +122,14 @@
             <NavLink class="nav-link" href="result">
                 <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span>Resultater
             </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="weather">
-                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Weather
-            </NavLink>
-        </div>
-
-        <div class="nav-item px-3">
+        </div> *@
+@*         <div class="nav-item px-3">
             <NavLink class="nav-link" href="auth">
                 <span class="bi bi-lock-nav-menu" aria-hidden="true"></span> Auth Required
             </NavLink>
         </div>
-
-        <AuthorizeView>
+ *@
+@*         <AuthorizeView>
             <Authorized>
                 <div class="nav-item px-3">
                     <NavLink class="nav-link" href="Account/Manage">
@@ -92,26 +160,5 @@
             </NotAuthorized>
         </AuthorizeView>
     </nav>
-</div>
-
-@code {
-    private string? currentUrl;
-
-    protected override void OnInitialized()
-    {
-        currentUrl = NavigationManager.ToBaseRelativePath(NavigationManager.Uri);
-        NavigationManager.LocationChanged += OnLocationChanged;
-    }
-
-    private void OnLocationChanged(object? sender, LocationChangedEventArgs e)
-    {
-        currentUrl = NavigationManager.ToBaseRelativePath(e.Location);
-        StateHasChanged();
-    }
-
-    public void Dispose()
-    {
-        NavigationManager.LocationChanged -= OnLocationChanged;
-    }
-}
+</div> *@
 

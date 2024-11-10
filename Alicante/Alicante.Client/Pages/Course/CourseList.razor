@@ -4,7 +4,7 @@
 @using Alicante.Client.BaseComponents
 @rendermode @(new InteractiveAutoRenderMode(false))
 
-<h3>Bane liste</h3>
+<h3>Baner</h3>
 
 @if (courses == null)
 {
@@ -12,46 +12,64 @@
 }
 else
 {
-    <a class="btn btn-primary" href="/Courseupsert">Opret ny</a>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Navn</th>
-                <th>Par</th>
-                <th>Course rating</th>
-                <th>Slope</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var c in courses)
-            {
-                <tr>
-                    <td>@c.CourseName</td>
-                    <td>@c.Par</td>
-                    <td>@c.CourseRating</td>
-                    <td>@c.Slope</td>
-                    <td>
-                        <a class="btn btn-secondary" href="/courseupsert/@c.CourseId">Rediger</a>
-                        <AuthorizeView Roles="Admin">
-                            <Authorized>
-                                <button class="btn btn-danger" @onclick="()=> { DeleteID = c.CourseId; Modal.Open();}">Slet</button>
-                            </Authorized>
-                        </AuthorizeView>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+ <RadzenDataGrid @ref="coursesGrid" AllowAlternatingRows="false" EditMode="DataGridEditMode.Single"
+                    Data="@courses" TItem="CourseModel" RowUpdate="@OnUpdateRow" RowCreate="@OnCreateRow" Sort="@Reset" Page="@Reset" Filter="@Reset">
+    <HeaderTemplate>
+        <RadzenButton ButtonStyle="ButtonStyle.Success" Icon="add_circle" Text="Ny bane" Click="@InsertRow" Disabled="@(coursesToInsert.Count() > 0)" />
+    </HeaderTemplate>
+    <Columns>
+ 
+        <RadzenDataGridColumn Property="@nameof(CourseModel.CourseName)" CssClass="col6" Title="Bane navn" Frozen="true">
+            <EditTemplate Context="course">
+                    <RadzenTextBox @bind-Value="course.CourseName" Style="width:200px; display: block" Name="CourseName" />
+                    <RadzenRequiredValidator Text="Skal have et navn" Component="CourseName" Popup="true" />
+            </EditTemplate>
 
-    <AppModal @ref="Modal">
-        <Title>Obs</Title>
-        <Body>
-            Vil du slette banen?
-        </Body>
-        <Footer>
-            <button type="button" class="btn btn-primary" style="width:80px" @onclick="HandleDelete">Yes</button>
-            <button type="button" class="btn btn-secondary" data-dismiss="modal" @onclick="() => Modal.Close()">Cancel</button>
-        </Footer>
-    </AppModal> 
+        </RadzenDataGridColumn>
+            <RadzenDataGridColumn Property="@nameof(CourseModel.Par)" Title="Par" TextAlign="TextAlign.Center" CssClass="col">
+            <Template Context="course">
+               @course.Par.ToString("D2")
+            </Template>
+            <EditTemplate Context="course">
+                <RadzenNumeric @bind-Value="course.Par" Style="width:100%" InputAttributes="@(new Dictionary<string,object>(){ { "aria-label", "Angiv par" }})" />
+            </EditTemplate>
+        </RadzenDataGridColumn>
+
+            <RadzenDataGridColumn Property="@nameof(CourseModel.CourseRating)" Title="CourseRating"TextAlign="TextAlign.Center" CssClass="col">
+            <Template Context="course">
+                @String.Format("{0:F1}", course.CourseRating)
+            </Template>
+            <EditTemplate Context="course">
+                <RadzenNumeric @bind-Value="course.CourseRating" Style="width:100%" InputAttributes="@(new Dictionary<string,object>(){ { "aria-label", "Angiv Course rating" }})" />
+            </EditTemplate>
+        </RadzenDataGridColumn>
+
+            <RadzenDataGridColumn Property="@nameof(CourseModel.Slope)" Title="Slope"  TextAlign="TextAlign.Center" CssClass="col">
+            <Template Context="course">
+               @course.Slope.ToString("D2")
+            </Template>
+            <EditTemplate Context="course">
+                    <RadzenNumeric @bind-Value="course.Slope" Style="width:100%" InputAttributes="@(new Dictionary<string,object>(){ { "aria-label", "Angiv slope" }})" />
+            </EditTemplate>
+        </RadzenDataGridColumn>
+
+        <RadzenDataGridColumn Context="course" Width="160px" TextAlign="TextAlign.Right" Frozen="true" FrozenPosition="FrozenColumnPosition.Right">
+            <Template Context="course">
+                <RadzenButton Icon="edit" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Medium" Click="@(args => EditRow(course))" @onclick:stopPropagation="true">
+                </RadzenButton>
+                <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="delete" Variant="Variant.Flat" Shade="Shade.Lighter" Size="ButtonSize.Medium" class="rz-my-1 rz-ms-1" Click="@(args => DeleteRow(course))" @onclick:stopPropagation="true">
+                </RadzenButton>
+            </Template>
+            <EditTemplate Context="course">
+                <RadzenButton Icon="check" ButtonStyle="ButtonStyle.Success" Variant="Variant.Flat" Size="ButtonSize.Medium" Click="@((args) => SaveRow(course))" aria-label="Save">
+                </RadzenButton>
+                <RadzenButton Icon="close" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Medium" class="rz-my-1 rz-ms-1" Click="@((args) => CancelEdit(course))" aria-label="Cancel">
+                </RadzenButton>
+                <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="delete" Variant="Variant.Flat" Shade="Shade.Lighter" Size="ButtonSize.Medium" class="rz-my-1 rz-ms-1" Click="@(args => DeleteRow(course))" aria-label="Delete">
+                </RadzenButton>
+            </EditTemplate>
+        </RadzenDataGridColumn>
+    </Columns>
+</RadzenDataGrid>
+
 }

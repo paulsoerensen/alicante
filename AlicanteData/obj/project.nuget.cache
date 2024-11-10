@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "kZrHssmJiY4=",
+  "success": true,
+  "projectFilePath": "d:\\Projects\\MensSection\\AlicanteData\\AlicanteData.sqlproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\pauls\\.nuget\\packages\\microsoft.netframework.referenceassemblies\\1.0.0\\microsoft.netframework.referenceassemblies.1.0.0.nupkg.sha512",
+    "C:\\Users\\pauls\\.nuget\\packages\\microsoft.netframework.referenceassemblies.net46\\1.0.0\\microsoft.netframework.referenceassemblies.net46.1.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}

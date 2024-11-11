@@ -15,10 +15,8 @@ public partial class ResultList
 
     [Inject]
     public HttpClient http { get; set; }
-    public IEnumerable<ResultViewModel> results { get; set; }
-    public IEnumerable<ResultViewModel> persistedResults { get; set; }
+    public IEnumerable<ResultViewModel> results { get; set; } = default!;
     public IEnumerable<PlayerViewModel> players { get; set; }
-    public IEnumerable<PlayerViewModel> filteredPlayers { get; set; }
     public IEnumerable<MatchViewModel> matches { get; set; }
 
     protected ResultViewModel insertedRow;
@@ -36,8 +34,6 @@ public partial class ResultList
         {
             matches = JsonConvert.DeserializeObject<List<MatchViewModel>>(res.Data.ToString());
         }
-
-        await LoadData();
     }
 
     #region Grid events
@@ -54,7 +50,6 @@ public partial class ResultList
 
     async Task EditRow(ResultViewModel result)
     {
-        results = persistedResults;
         await resultGrid.EditRow(result);
         Editing = true;
     }
@@ -63,7 +58,7 @@ public partial class ResultList
         ResultModel model = new()
         {
             MatchId = matchId,
-            ResultId = result.ResultId,
+            //ResultId = result.ResultId,
             PlayerId = result.PlayerId,
             Birdies = result.Birdies,
             Hcp = result.Hcp,
@@ -73,8 +68,9 @@ public partial class ResultList
         var res = await http.PostAsJsonAsync<ResultModel>($"/api/result", model);
         if (res!.IsSuccessStatusCode)
         {
+            await LoadResult();
+            await LoadPlayers();        
             ToastService.ShowSuccess("Resultat er opdateret");
-            await LoadData();
         }
         else
         {
@@ -82,7 +78,7 @@ public partial class ResultList
         }
         await resultGrid.Reload();
         Editing = false;
-        filteredPlayers = players;
+
     }
     async Task DeleteRow(ResultViewModel result)
     {
@@ -102,21 +98,27 @@ public partial class ResultList
         insertedRow = new ResultViewModel();
         await resultGrid.InsertRow(insertedRow);
         Editing = true;
-        filteredPlayers = players.Where(o => o.ResultId == null);
     }
     void CancelEdit(ResultViewModel result)
     {
         resultGrid.CancelEditRow(result);
         Editing = false;
-        filteredPlayers = players;
     }
     #endregion
 
     void Reset()
     {
-        results = persistedResults;
         Editing = false;
-        filteredPlayers = players;
+    }
+
+    private async Task MatchChanged(int id)
+    {
+        matchId = id;
+
+        // Cast the value to the appropriate type (if needed)
+        await LoadResult();
+        await LoadPlayers();
+        StateHasChanged();
     }
     private void PlayerChanged(int playerId)
     {
@@ -125,22 +127,21 @@ public partial class ResultList
         PlayerViewModel? model = players.SingleOrDefault(p => p.PlayerId == playerId);
         insertedRow.Hcp = model.Hcp;
     }
-
-    protected async Task LoadData()
+    private async Task LoadPlayers()
+    {
+        var res = await http.GetFromJsonAsync<BaseResponseModel>($"/api/player/match/{matchId}");
+        if (res != null && res.Success)
+        {
+            players = JsonConvert.DeserializeObject<List<PlayerViewModel>>(res.Data.ToString());
+        }
+    }
+    protected async Task LoadResult()
     {
         var res = await http.GetFromJsonAsync<BaseResponseModel>($"/api/result/match/{matchId}");
         if (res != null && res.Success)
         {
-            persistedResults = JsonConvert.DeserializeObject<List<ResultViewModel>>(res.Data.ToString());
-            results = persistedResults;
-        }
-        res = await http.GetFromJsonAsync<BaseResponseModel>($"/api/player/match/{matchId}");
-        if (res != null && res.Success)
-        {
-            players = JsonConvert.DeserializeObject<List<PlayerViewModel>>(res.Data.ToString());
-            filteredPlayers = players;
+            results = JsonConvert.DeserializeObject<List<ResultViewModel>>(res.Data.ToString());
         }
     }
-
 }
 

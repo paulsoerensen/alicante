@@ -4,14 +4,17 @@
 @using Alicante.Client.BaseComponents
 @rendermode @(new InteractiveAutoRenderMode(false))
 
-<RadzenCard Variant="Variant.Flat">
-    <RadzenText TextStyle="TextStyle.H6" TagName="TagName.H3">Matcher</RadzenText>
-    <RadzenDropDown Style="width: 100%; max-width: 300px;" TValue="int" @bind-Value="matchId" Placeholder="Vælg match" AllowFiltering="true"
-                    Data="@(matches)" TextProperty="@nameof(MatchViewModel.MatchText)" ValueProperty="@nameof(MatchViewModel.MatchId)" 
-                    InputAttributes="@(new Dictionary<string,object>(){ { "aria-label", "Vælg match" }})"
-                    Change="@(args => { results = results.Where(o => o.MatchId == matchId); })" />
-</RadzenCard>
-   
+@if (matches != null)
+{
+    <RadzenCard Variant="Variant.Flat">
+        <RadzenText TextStyle="TextStyle.H6" TagName="TagName.H3">Matcher</RadzenText>
+        <RadzenDropDown Style="width: 100%; max-width: 300px;" TValue="int" @bind-Value="matchId" Placeholder="Vælg match" AllowFiltering="true"
+        Data="@(matches)" TextProperty="@nameof(MatchViewModel.MatchText)" ValueProperty="@nameof(MatchViewModel.MatchId)" 
+        InputAttributes="@(new Dictionary<string,object>(){ { "aria-label", "Vælg match" }})"
+        Change="@((value) => MatchChanged((int)value))" />
+    </RadzenCard>
+}
+
 <RadzenDataGrid @ref="resultGrid" AllowAlternatingRows="false" EditMode="DataGridEditMode.Single"
                 Data="@results" TItem="ResultViewModel" RowUpdate="@OnUpdateRow" 
                 RowCreate="@OnCreateRow" Sort="@Reset" Page="@Reset" Filter="@Reset">
@@ -27,7 +30,7 @@
             <EditTemplate Context="result">
                 <RadzenDropDown @bind-Value="result.PlayerId" AllowClear="true" Placeholder="Vælg spiller"
                                 Change="@((value) => PlayerChanged((int)value))"
-                                Data="@filteredPlayers" Style="width: 100%;"
+                                Data="@players" Style="width: 100%;"
                                 TextProperty="PlayerName" ValueProperty="PlayerId" Name="PlayerId">
                 </RadzenDropDown>
             </EditTemplate>

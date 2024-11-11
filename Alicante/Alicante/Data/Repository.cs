@@ -157,7 +157,7 @@ namespace Alicante.Data
         {
             var sql = @"SELECT PlayerId, PlayerName, ResultId, Hcp " +
                 "FROM al.vPlayersForMatch " +
-                "where MatchId = @matchId";
+                "where MatchId = @matchId and ResultId is null";
 
             using (IDbConnection db = CreateConnection())
             {

@@ -1,8 +1,15 @@
 ﻿using Alicante.Client.Models;
 using Alicante.Data;
 using AutoMapper;
+using BlazorStrap;
+using Humanizer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Radzen.Blazor.Rendering;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq.Expressions;
 
 
 namespace Alicante.Controllers;
@@ -43,6 +50,22 @@ public class ResultController : BaseController
         catch (Exception e)
         {
             return Ok(new BaseResponseModel { Success = false, ErrorMessage = e.Message});
+        }
+    }
+
+    // GET: api/result/match/score/matchId
+    [HttpGet("score/{tournamentId}")]
+    public async Task<ActionResult<BaseResponseModel>> TournamentResult(int tournamentId)
+    {
+        try
+        {
+            IEnumerable<MatchResultViewModel> models = await _repo.TournamentResult(tournamentId);
+
+            return Ok(new BaseResponseModel { Success = true, Data = models });
+        }
+        catch (Exception e)
+        {
+            return Ok(new BaseResponseModel { Success = false, ErrorMessage = e.Message });
         }
     }
 

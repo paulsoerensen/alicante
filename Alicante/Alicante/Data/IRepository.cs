@@ -36,7 +36,7 @@ public interface IRepository
 
     Task<IEnumerable<ResultViewModel>> GetResults();
     Task<IEnumerable<ResultViewModel>> GetResults(int matchId);
-    Task<IEnumerable<ResultViewModel>> ResultFromMatch(int matchId);
+    Task<IEnumerable<MatchResultViewModel>> TournamentResult(int matchId);
     Task<int> DeleteResult(int resultId);
 
 }

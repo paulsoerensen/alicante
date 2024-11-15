@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Blazored.Toast;
 using Radzen;
 using BlazorStrap;
+using Alicante.Client.BaseComponents;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 
@@ -29,6 +30,7 @@ builder.Services.AddScoped<DialogService>();
 builder.Services.AddScoped<NotificationService>();
 builder.Services.AddScoped<ContextMenuService>();
 builder.Services.AddScoped<TooltipService>();
+
 
 builder.Services.AddBlazoredToast();
 

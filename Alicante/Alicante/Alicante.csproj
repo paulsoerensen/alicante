@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="..\Alicante.Client\Pages\Counter.razor.cs" Link="Counter.razor.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Alicante.Client\Alicante.Client.csproj" />
     <PackageReference Include="BlazorStrap" Version="5.2.101" />
     <PackageReference Include="BlazorStrap.V5" Version="5.2.101" />

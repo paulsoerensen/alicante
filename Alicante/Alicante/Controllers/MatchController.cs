@@ -1,4 +1,5 @@
-﻿using Alicante.Client.Models;
+﻿using Alicante.Client.BaseComponents;
+using Alicante.Client.Models;
 using Alicante.Data;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,8 +9,10 @@ namespace Alicante.Controllers;
 [ApiController]
 public class MatchController : BaseController
 {
-    public MatchController(IRepository repository) : base(repository)
+    private AppState _appState;
+    public MatchController(IRepository repository, AppState appState) : base(repository)
     {
+        _appState = appState;
     }
 
     // GET: api/Match
@@ -55,6 +58,11 @@ public class MatchController : BaseController
         }
         try
         {
+            // Så er den ny
+            if (model.TournamentId < 1)
+            {
+                model.TournamentId = _appState.TournamentId;
+            }
             var newModel = await _repo.UpsertMatch(model);
             return Ok(new BaseResponseModel { Success = true, Data = newModel });
         }

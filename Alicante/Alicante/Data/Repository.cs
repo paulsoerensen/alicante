@@ -315,7 +315,8 @@ namespace Alicante.Data
             var sql = @"SELECT 
                 ResultId, TournamentId, TournamentName, Active, MatchId, MatchDate, 
                 CourseId, CourseName, CourseRating, Slope, Hcp, Score, 
-                Birdies, PlayerId, PlayerName, HcpIndex, Par3
+                Birdies, PlayerId, PlayerName, HcpIndex, Par3,
+                Rank() over (partition by TournamentId order by MatchDate) as matchRank
                 FROM al.vResult
                 WHERE MatchId = @matchId"
             ;
@@ -325,19 +326,18 @@ namespace Alicante.Data
             }
         }
 
-        public async Task<IEnumerable<ResultViewModel>> ResultFromMatch(int matchId)
+        public async Task<IEnumerable<MatchResultViewModel>> TournamentResult(int tournamentId)
         {
-            var sql = @"SELECT 
-                TournamentId, TournamentName, Active, MatchId, MatchDate, 
-                CourseId, CourseName, CourseRating, Slope, Hcp, Score, 
-                Birdies, PlayerId, Name AS PlayerName, HcpIndex
-            FROM al.vPlayerMatch WHERE MatchId = @matchId"
-            ;
+            var sql = @" SELECT TournamentId, CourseName, MatchId, MatchDate, PlayerName, 
+                Hcp, Score, Birdies, HcpIndex, Par3
+                FROM al.vResult WHERE TournamentId = @tournamentId";
+
             using (IDbConnection db = CreateConnection())
             {
-                return await db.QueryAsync<ResultViewModel>(sql, new { matchId });
+                return await db.QueryAsync<MatchResultViewModel>(sql, new { tournamentId });
             }
         }
+
 
         public async Task<int> DeleteResult(int resultId)
         {

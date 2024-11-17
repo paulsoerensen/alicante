@@ -1,15 +1,7 @@
 ﻿using Alicante.Client.Models;
 using Alicante.Data;
 using AutoMapper;
-using BlazorStrap;
-using Humanizer;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using Radzen.Blazor.Rendering;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq.Expressions;
 
 
 namespace Alicante.Controllers;

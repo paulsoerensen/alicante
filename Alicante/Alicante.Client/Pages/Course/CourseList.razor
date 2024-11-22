@@ -13,92 +13,82 @@
 }
 else
 {
- <RadzenDataGrid @ref="coursesGrid" AllowAlternatingRows="false" EditMode="DataGridEditMode.Single"
-                    Data="@courses" TItem="CourseModel" RowUpdate="@OnUpdateRow" RowCreate="@OnCreateRow" Sort="@Reset" Page="@Reset" Filter="@Reset">
-    <HeaderTemplate>
-        <RadzenButton ButtonStyle="ButtonStyle.Success" Icon="add_circle" Text="Ny bane" Click="@InsertRow" Disabled="@(coursesToInsert.Count() > 0)" />
-    </HeaderTemplate>
-    <Columns>
- 
-        <RadzenDataGridColumn Property="@nameof(CourseModel.CourseName)" CssClass="col6" Title="Bane navn" Frozen="true">
-            <EditTemplate Context="course">
-                    <RadzenTextBox @bind-Value="course.CourseName" Style="width:200px; display: block" Name="CourseName" />
-                    <RadzenRequiredValidator Text="Skal have et navn" Component="CourseName" Popup="true" />
-            </EditTemplate>
+    <RadzenDataGrid @ref="coursesGrid" AllowAlternatingRows="false" EditMode="DataGridEditMode.Single"
+                    Data="@courses" TItem="CourseModel" RowUpdate="@OnUpdateRow" 
+                    RowCreate="@OnCreateRow">
+        <HeaderTemplate>
+            <RadzenStack AlignItems="AlignItems.End">
+                <RadzenButton ButtonStyle="ButtonStyle.Success" Icon="add_circle" 
+                    Text="Ny bane" Click="@InsertRow" />
+            </RadzenStack>
+        </HeaderTemplate>
+        <Columns>
+            <RadzenDataGridColumn Property="@nameof(CourseModel.CourseName)" CssClass="col6" Title="Bane navn" Frozen="true">
+                <EditTemplate Context="course">
+                        <RadzenTextBox @bind-Value="course.CourseName" Style="width:200px; display: block" Name="CourseName" />
+                        <RadzenRequiredValidator Text="Skal have et navn" Component="CourseName" Popup="true" />
+                </EditTemplate>
+            </RadzenDataGridColumn>
 
-        </RadzenDataGridColumn>
             <RadzenDataGridColumn Property="@nameof(CourseModel.Par)" Title="Par" TextAlign="TextAlign.Center" CssClass="col">
-            <Template Context="course">
-               @course.Par.ToString("D2")
-            </Template>
-            <EditTemplate Context="course">
-                <RadzenNumeric @bind-Value="course.Par" Style="width:100%" InputAttributes="@(new Dictionary<string,object>(){ { "aria-label", "Angiv par" }})" />
-            </EditTemplate>
-        </RadzenDataGridColumn>
+                <Template Context="course">
+                   @course.Par.ToString("D2")
+                </Template>
+                <EditTemplate Context="course">
+                    <RadzenNumeric @bind-Value="course.Par" Style="width:100%" InputAttributes="@(new Dictionary<string,object>(){ { "aria-label", "Angiv par" }})" />
+                </EditTemplate>
+            </RadzenDataGridColumn>
 
             <RadzenDataGridColumn Property="@nameof(CourseModel.CourseRating)" Title="CourseRating"TextAlign="TextAlign.Center" CssClass="col">
-            <Template Context="course">
-                @String.Format("{0:F1}", course.CourseRating)
-            </Template>
-            <EditTemplate Context="course">
-                <RadzenNumeric @bind-Value="course.CourseRating" Style="width:100%" InputAttributes="@(new Dictionary<string,object>(){ { "aria-label", "Angiv Course rating" }})" />
-            </EditTemplate>
-        </RadzenDataGridColumn>
+                <Template Context="course">
+                    @String.Format("{0:F1}", course.CourseRating)
+                </Template>
+                <EditTemplate Context="course">
+                    <RadzenNumeric @bind-Value="course.CourseRating" Style="width:100%" InputAttributes="@(new Dictionary<string,object>(){ { "aria-label", "Angiv Course rating" }})" />
+                </EditTemplate>
+            </RadzenDataGridColumn>
 
             <RadzenDataGridColumn Property="@nameof(CourseModel.Slope)" Title="Slope"  TextAlign="TextAlign.Center" CssClass="col">
-            <Template Context="course">
-               @course.Slope.ToString("D2")
-            </Template>
-            <EditTemplate Context="course">
-                    <RadzenNumeric @bind-Value="course.Slope" Style="width:100%" InputAttributes="@(new Dictionary<string,object>(){ { "aria-label", "Angiv slope" }})" />
-            </EditTemplate>
-        </RadzenDataGridColumn>
+                <Template Context="course">
+                   @course.Slope.ToString("D2")
+                </Template>
+                <EditTemplate Context="course">
+                        <RadzenNumeric @bind-Value="course.Slope" Style="width:100%" InputAttributes="@(new Dictionary<string,object>(){ { "aria-label", "Angiv slope" }})" />
+                </EditTemplate>
+            </RadzenDataGridColumn>
 
-        <RadzenDataGridColumn Context="course" Width="160px" TextAlign="TextAlign.Right" Frozen="true" FrozenPosition="FrozenColumnPosition.Right">
-            <Template Context="course">
-                <RadzenButton Icon="edit" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Medium" Click="@(args => EditRow(course))" @onclick:stopPropagation="true">
-                </RadzenButton>
-                <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="delete" Variant="Variant.Flat" Shade="Shade.Lighter" Size="ButtonSize.Medium" class="rz-my-1 rz-ms-1" Click="@(args => DeleteRow(course))" @onclick:stopPropagation="true">
-                </RadzenButton>
-            </Template>
-            <EditTemplate Context="course">
-                <RadzenButton Icon="check" ButtonStyle="ButtonStyle.Success" Variant="Variant.Flat" Size="ButtonSize.Medium" Click="@((args) => SaveRow(course))" aria-label="Save">
-                </RadzenButton>
-                <RadzenButton Icon="close" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Medium" class="rz-my-1 rz-ms-1" Click="@((args) => CancelEdit(course))" aria-label="Cancel">
-                </RadzenButton>
-                <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="delete" Variant="Variant.Flat" Shade="Shade.Lighter" Size="ButtonSize.Medium" class="rz-my-1 rz-ms-1" Click="@(args => DeleteRow(course))" aria-label="Delete">
-                </RadzenButton>
-            </EditTemplate>
-        </RadzenDataGridColumn>
-    </Columns>
-</RadzenDataGrid>
-
+            <RadzenDataGridColumn Context="course" Width="160px" TextAlign="TextAlign.Right" Frozen="true" FrozenPosition="FrozenColumnPosition.Right">
+                <Template Context="course">
+                    <RadzenButton Icon="edit" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="Radzen.ButtonSize.Medium" Click="@(args => EditRow(course))" @onclick:stopPropagation="true">
+                    </RadzenButton>
+                    <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="delete" Variant="Variant.Flat" Shade="Shade.Lighter" Size="Radzen.ButtonSize.Medium" class="rz-my-1 rz-ms-1" Click="@(args => DeleteRow(course))" @onclick:stopPropagation="true">
+                    </RadzenButton>
+                </Template>
+                <EditTemplate Context="course">
+                    <RadzenButton Icon="check" ButtonStyle="ButtonStyle.Success" Variant="Variant.Flat" Size="Radzen.ButtonSize.Medium" Click="@((args) => SaveRow(course))" aria-label="Save">
+                    </RadzenButton>
+                    <RadzenButton Icon="close" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="Radzen.ButtonSize.Medium" class="rz-my-1 rz-ms-1" Click="@((args) => CancelEdit(course))" aria-label="Cancel">
+                    </RadzenButton>
+                    <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="delete" Variant="Variant.Flat" Shade="Shade.Lighter" Size="Radzen.ButtonSize.Medium" class="rz-my-1 rz-ms-1" Click="@(args => DeleteRow(course))" aria-label="Delete">
+                    </RadzenButton>
+                </EditTemplate>
+            </RadzenDataGridColumn>
+        </Columns>
+    </RadzenDataGrid>
 }
+<AppModal />
+<ConfirmDialog @ref="dialog" />
 
 @code {
     RadzenDataGrid<CourseModel> coursesGrid;
+    private ConfirmDialog dialog = default!;
 
     [Inject] public HttpClient http { get; set; }
     [Inject] public NavigationManager NavigationManager { get; set; }
-    [Inject] public IToastService ToastService { get; set; }
+    [Inject] public BlazorBootstrap.ToastService ToastService { get; set; }
 
     public List<CourseModel> courses { get; set; }
     public AppModal Modal { get; set; }
-
-    List<CourseModel> coursesToInsert = new List<CourseModel>();
-    List<CourseModel> coursesToUpdate = new List<CourseModel>();
-
-    void Reset()
-    {
-        coursesToInsert.Clear();
-        coursesToUpdate.Clear();
-    }
-
-    void Reset(CourseModel course)
-    {
-        coursesToInsert.Remove(course);
-        coursesToUpdate.Remove(course);
-    }
 
     protected override async Task OnInitializedAsync()
     {
@@ -108,41 +98,50 @@ else
 
     async Task EditRow(CourseModel course)
     {
-        if (coursesToInsert.Count() > 0)
-        {
-            Reset();
-        }
-
-        coursesToUpdate.Add(course);
         await coursesGrid.EditRow(course);
     }
 
     void OnUpdateRow(CourseModel course)
     {
-        Reset(course);
+       ;
     }
 
-    async Task SaveRow(CourseModel course)
+    async Task SaveRow(CourseModel model)
     {
-        await coursesGrid.UpdateRow(course);
+        var res = await http.PostAsJsonAsync<CourseModel>($"/api/course/", model);
+        if (res!.IsSuccessStatusCode)
+        {
+            ToastService.Notify(new(ToastType.Success, "Banen er opdateret"));
+            await LoadData();
+        }
+        else
+        {
+            ToastService.Notify(new(ToastType.Warning, "Der opstod en fejl"));
+            coursesGrid.CancelEditRow(model);
+        }
+        await coursesGrid.Reload();
     }
 
     void CancelEdit(CourseModel course)
     {
-        Reset(course);
-
         coursesGrid.CancelEditRow(course);
     }
     async Task DeleteRow(CourseModel course)
     {
-        Reset(course);
+        var options = new ConfirmDialogOptions { Size = DialogSize.Small };
+
+        var confirmation = await dialog.ShowAsync(
+            title: "Hva sååå!",
+            message1: "Skal den slettes?",
+            confirmDialogOptions: options);
+
+        if (!confirmation)
+        {
+            return;
+        }
 
         if (courses.Contains(course))
         {
-            //dbContext.Remove<CourseModel>(course);
-
-            //dbContext.SaveChanges();
-
             await coursesGrid.Reload();
         }
         else
@@ -153,19 +152,12 @@ else
     }
     async Task InsertRow()
     {
-        Reset();
-
         var course = new CourseModel();
-        coursesToInsert.Add(course);
         await coursesGrid.InsertRow(course);
     }
     void OnCreateRow(CourseModel course)
     {
-        //dbContext.Add(course);
-
-        //dbContext.SaveChanges();
-
-        coursesToInsert.Remove(course);
+        ;
     }
 
     protected async Task LoadData()

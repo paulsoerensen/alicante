@@ -20,6 +20,14 @@ public class TournamentController : BaseController
         return Ok(new BaseResponseModel { Success = true, Data = model });
     }
 
+    // GET: api/Tournament
+    [HttpGet("active")]
+    public async Task<ActionResult<BaseResponseModel>> GetActiveTournament()
+    {
+        var model = await _repo.GetAciveTournament();
+        return Ok(new BaseResponseModel { Success = true, Data = model });
+    }
+
     // GET: api/Tournament/5
     [HttpGet("{id}")]
     public async Task<ActionResult<BaseResponseModel>> GetTournament(int id)

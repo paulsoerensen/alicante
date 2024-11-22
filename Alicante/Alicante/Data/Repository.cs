@@ -23,7 +23,7 @@ namespace Alicante.Data
 
         #region Course
 
-        private const string courseSelect = @"SELECT [CourseId],[CourseName],[CourseRating],[Slope] 
+        private const string courseSelect = @"SELECT [CourseId],[CourseName],[Par],[CourseRating],[Slope] 
                                                 FROM al.Course";
 
         public async Task<CourseModel> GetCourse(int courseId)
@@ -39,8 +39,7 @@ namespace Alicante.Data
         {
             using (IDbConnection db = CreateConnection())
             {
-                const string findAllQuery = courseSelect;
-                var results = await db.QueryAsync<CourseModel>(findAllQuery);
+                var results = await db.QueryAsync<CourseModel>(courseSelect);
                 return results;
             }
         }
@@ -328,9 +327,15 @@ namespace Alicante.Data
 
         public async Task<IEnumerable<MatchResultViewModel>> TournamentResult(int tournamentId)
         {
-            var sql = @" SELECT TournamentId, CourseName, MatchId, MatchDate, PlayerName, 
-                Hcp, Score, Birdies, HcpIndex, Par3
-                FROM al.vResult WHERE TournamentId = @tournamentId";
+            var sql = @" SELECT TournamentId, CourseName, MatchId, MatchDate, PlayerName, PlayerId,
+                Hcp, Score, Score-Hcp as Netto, Birdies, HcpIndex, Par3
+                FROM al.vResult WHERE TournamentId = @tournamentId
+                union
+                SELECT TournamentId, 'Total', -1, null, PlayerName, PlayerId, 
+                null, sum(Score), sum(Score-Hcp) as Netto,  sum(Birdies), null, sum(Par3)
+                FROM al.vResult 
+				group by TournamentId, PlayerName, PlayerId 
+				HAVING TournamentId = @tournamentId";
 
             using (IDbConnection db = CreateConnection())
             {

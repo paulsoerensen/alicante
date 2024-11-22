@@ -4,7 +4,6 @@
 
 @inject NavigationManager NavigationManager
 
-
 <BSNavbar Color="BSColor.Light" IsFixedTop=true>
     <div class="container-fluid">
         <BSNavbarBrand Url="#">Alicante</BSNavbarBrand>
@@ -20,12 +19,12 @@
                     <BSNavItem Url="match">Matcher</BSNavItem>
                     <BSNavItem Url="result">Resultater</BSNavItem>
                     <BSNavItem Url="scores">Leaderboard</BSNavItem>
-                    @*                     <AuthorizeView Roles="@AppRoles.Admin">
+@*                     <AuthorizeView Roles="@AppRoles.Admin">
                         <BSNavItem Url="preconditions">Preconditions</BSNavItem>
                         <BSNavItem Url="logging">Logging</BSNavItem>
                         <BSNavItem Url="admin">Admin</BSNavItem>
-                    </AuthorizeView> *@
-                </BSNav>
+                    </AuthorizeView> 
+ *@                </BSNav>
             </Content>
         </BSCollapse>
         @if (activeTournament != null) {
@@ -49,8 +48,8 @@
                     </AuthorizeView>
                 </div>
             </AuthorizeView>
-@*             <LoginDisplay></LoginDisplay>
- *@        </div>
+             <LoginDisplay></LoginDisplay>
+         </div>
     </div>
 </BSNavbar>
 
@@ -59,6 +58,7 @@
 
     [CascadingParameter]
     int tournamentId { get; set; }
+    string tournamentName { get; set; }
 
     [Inject] public AppState _appState { get; set; }
     [Inject] public IRepository _repo { get; set; }
@@ -68,7 +68,10 @@
     {
         currentUrl = NavigationManager.ToBaseRelativePath(NavigationManager.Uri);
         NavigationManager.LocationChanged += OnLocationChanged;
+        _appState.StateChangedHandler += OnTournamentChanged;
         activeTournament = await _repo.GetAciveTournament();
+        tournamentId = activeTournament.TournamentId;
+        tournamentName = activeTournament.TournamentName;
         _appState.TournamentId = activeTournament!.TournamentId;
     }
 
@@ -78,8 +81,29 @@
         StateHasChanged();
     }
 
+    private void OnTournamentChanged(object sender, EventArgs e)
+    {
+        var appState = sender as AppState;
+        if (appState != null)
+        {
+            tournamentId = _appState.TournamentId;
+            tournamentName = _appState.TournamentName;
+            StateHasChanged();
+        }
+    }
+
     public void Dispose()
     {
         NavigationManager.LocationChanged -= OnLocationChanged;
+        _appState.StateChangedHandler -= OnTournamentChanged;
+    }
+
+    private bool collapseNavMenu = true;
+    private string? NavBarCssClass => collapseNavMenu ? null : "show";
+    private string? NavButtonCssClass => collapseNavMenu ? "collapsed" : null;
+
+    private void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
     }
 }

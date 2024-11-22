@@ -6,10 +6,10 @@
         public int MatchRank { get; set; }
         public DateTime MatchDate { get; set; }
         public string CourseName { get; set; }
-        public int Hcp { get; set; }
+        public int? Hcp { get; set; }
         public int Par { get; set; }
         public int Score { get; set; }
-        public int Netto => Score - Hcp;
+        public int Netto { get; set; }
 
         public int Birdies { get; set; }
         public int Par3 { get; set; }

@@ -1,0 +1,37 @@
+﻿@page "/info"
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Components.Authorization
+@using Alicante.Client.BaseComponents
+
+<h3>Info</h3>
+@* <ul>
+@foreach (var item in lst)
+{
+    <li>
+    <p>@item.Key: @item.Value</p>
+    </li>
+}}
+</ul>
+
+
+@code {
+    public IConfiguration config { get; set; }
+    protected List<KeyValuePair<string, string>> lst;
+
+    public Info(IConfiguration configuration)
+    {
+        config = configuration;
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        lst = new()
+        {
+            new("Environment", config["ASPNETCORE_ENVIRONMENT"]),
+            //new("Host IP", Dns.GetHostEntry(hostName).AddressList[0].ToString()),
+            new("DefaultConnection", config.GetConnectionString("DefaultConnection"),
+            new("AlicanteDB", config.GetConnectionString("AlicanteDB")
+        };
+    }
+}
+ *@

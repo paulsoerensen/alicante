@@ -2,7 +2,6 @@
 @using Newtonsoft.Json
 @rendermode @(new InteractiveWebAssemblyRenderMode(false))
 
-<h3>Scores</h3>
 @if (matches == null)
 {
     <p>Henter ...</p>
@@ -70,17 +69,25 @@ else
 
 @code {
     [Inject] public HttpClient http { get; set; }
+    [Inject] public AppState _appState { get; set; }
 
     public IEnumerable<MatchResultViewModel> scores { get; set; }
     public IEnumerable<MatchResultViewModel> birdies { get; set; }
     public IEnumerable<MatchResultViewModel> par3s { get; set; }
     public IEnumerable<MatchHeader> matches { get; set; }
 
-    public int TournamentId { get; set; } = 1;
+    public TournamentModel ActiveTournament { get; set; }
+
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
-        var res = await http.GetFromJsonAsync<BaseResponseModel>($"/api/result/score/{TournamentId}");
+        var res = await http.GetFromJsonAsync<BaseResponseModel>($"/api/tournament/active");
+        if (!res!.Success)
+        {
+            return;
+        }
+        ActiveTournament = JsonConvert.DeserializeObject<TournamentModel>(res.Data.ToString());
+        res = await http.GetFromJsonAsync<BaseResponseModel>($"/api/result/score/{ActiveTournament.TournamentId}");
         if (res != null && res.Success)
         {
             var results = JsonConvert.DeserializeObject<List<MatchResultViewModel>>(res.Data.ToString());

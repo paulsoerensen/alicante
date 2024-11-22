@@ -16,6 +16,7 @@ public class AppState
             }
         }
     }
+    public string TournamentName { get; set; }
 
     public event EventHandler StateChangedHandler;
     

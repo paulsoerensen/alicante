@@ -14,7 +14,7 @@
 else
 {
     <RadzenDataGrid @ref="tournamentGrid" AllowAlternatingRows="false" EditMode="DataGridEditMode.Single"
-                Data="@tournaments" TItem="TournamentModel" RowUpdate="@OnUpdateRow" RowCreate="@OnCreateRow" Sort="@Reset" Page="@Reset" Filter="@Reset">
+                Data="@tournaments" TItem="TournamentModel" RowUpdate="@OnUpdateRow" RowCreate="@OnCreateRow">
         <HeaderTemplate>
             <RadzenCard Variant="Variant.Flat" class="d-flex justify-content-end w-100">
                 <RadzenText TextStyle="TextStyle.H6" TagName="TagName.H3">Aktuel turnering</RadzenText>
@@ -39,31 +39,35 @@ else
 
             <RadzenDataGridColumn Context="tournament" Width="160px" TextAlign="TextAlign.Right" Frozen="true" FrozenPosition="FrozenColumnPosition.Right">
                 <Template Context="tournament">
-                    <RadzenButton Icon="edit" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Medium" Click="@(args => EditRow(tournament))" @onclick:stopPropagation="true">
+                    <RadzenButton Icon="edit" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="Radzen.ButtonSize.Medium" Click="@(args => EditRow(tournament))" @onclick:stopPropagation="true">
                     </RadzenButton>
-                    <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="delete" Variant="Variant.Flat" Shade="Shade.Lighter" Size="ButtonSize.Medium" class="rz-my-1 rz-ms-1" Click="@(args => DeleteRow(tournament))" @onclick:stopPropagation="true">
+                    <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="delete" Variant="Variant.Flat" Shade="Shade.Lighter" Size="Radzen.ButtonSize.Medium" class="rz-my-1 rz-ms-1" Click="@(args => DeleteRow(tournament))" @onclick:stopPropagation="true">
                     </RadzenButton>
                 </Template>
                 <EditTemplate Context="tournament">
-                    <RadzenButton Icon="check" ButtonStyle="ButtonStyle.Success" Variant="Variant.Flat" Size="ButtonSize.Medium" Click="@((args) => SaveRow(tournament))" aria-label="Save">
+                    <RadzenButton Icon="check" ButtonStyle="ButtonStyle.Success" Variant="Variant.Flat" Size="Radzen.ButtonSize.Medium" Click="@((args) => SaveRow(tournament))" aria-label="Save">
                     </RadzenButton>
-                    <RadzenButton Icon="close" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Medium" class="rz-my-1 rz-ms-1" Click="@((args) => CancelEdit(tournament))" aria-label="Cancel">
+                    <RadzenButton Icon="close" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="Radzen.ButtonSize.Medium" class="rz-my-1 rz-ms-1" Click="@((args) => CancelEdit(tournament))" aria-label="Cancel">
                     </RadzenButton>
-                    <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="delete" Variant="Variant.Flat" Shade="Shade.Lighter" Size="ButtonSize.Medium" class="rz-my-1 rz-ms-1" Click="@(args => DeleteRow(tournament))" aria-label="Delete">
+                    <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="delete" Variant="Variant.Flat" Shade="Shade.Lighter" Size="Radzen.ButtonSize.Medium" class="rz-my-1 rz-ms-1" Click="@(args => DeleteRow(tournament))" aria-label="Delete">
                     </RadzenButton>
                 </EditTemplate>
             </RadzenDataGridColumn>
         </Columns>
     </RadzenDataGrid>
 }
+<AppModal />
+<ConfirmDialog @ref="dialog" />
 
 @code {
     RadzenDataGrid<TournamentModel> tournamentGrid;
-    private DeleteConfirmationDialog deleteDialog;
+    private ConfirmDialog dialog = default!;
 
     [Inject] public HttpClient http { get; set; }
-    [Inject] private IToastService ToastService { get; set; }
+    [Inject] private BlazorBootstrap.ToastService ToastService { get; set; }
     [Inject] private DialogService DialogService { get; set; } = default!;
+    [Inject] public AppState _appState { get; set; }
+
 
     public List<TournamentModel> tournaments { get; set; } = default!;
     public int activeId { get; set; }
@@ -75,6 +79,8 @@ else
         await base.OnInitializedAsync();
         await LoadData();
         activeId = tournaments.Where(x => x.Active == true).Select(x => x.TournamentId).SingleOrDefault();
+        _appState.TournamentId = activeId;
+
         StateHasChanged();
     }
 
@@ -100,34 +106,42 @@ else
         var res = await http.PostAsJsonAsync($"/api/tournament/", model);
         if (res!.IsSuccessStatusCode)
         {
-            ToastService.ShowSuccess("Tournamenten er opdateret");
+            ToastService.Notify(new(ToastType.Success, "Turneringen er gemt"));
             await LoadData();
         }
         else
         {
+            ToastService.Notify(new(ToastType.Warning, "Der opstod en fejl"));
             tournamentGrid.CancelEditRow(model);
         }
         await tournamentGrid.Reload();
         Editing = false;
     }
-    async Task DeleteRow(TournamentModel model)
-    {
-        // Trigger the dialog to show
-        deleteId = model.TournamentId;
-        deleteDialog.Show(model.TournamentName);
-    }
 
-    private async Task HandleDeleteConfirmation()
+    async Task DeleteRow(TournamentModel tournament)
     {
-        var res = await http.DeleteFromJsonAsync<BaseResponseModel>($"/api/tournament/{deleteId}");
+        var options = new ConfirmDialogOptions { Size = DialogSize.Small };
+
+        var confirmation = await dialog.ShowAsync(
+            title: "Hva sååå!",
+            message1: "Skal den slettes?",
+            confirmDialogOptions: options);
+
+        if (!confirmation)
+        {
+            return;
+        }
+
+        var res = await http.DeleteFromJsonAsync<BaseResponseModel>($"/api/tournament/{tournament}");
         if (res!.Success)
         {
-            ToastService.ShowSuccess("Turnering er slettet");
+            ToastService.Notify(new(ToastType.Success, "Turneringen er slettet"));
         }
-        //else
-        //{
-        //    tournamentGrid.CancelEditRow(model);
-        //}
+        else
+        {
+            tournamentGrid.CancelEditRow(tournament);
+            ToastService.Notify(new(ToastType.Warning, res.ErrorMessage));
+        }
         await tournamentGrid.Reload();
     }
 
@@ -149,12 +163,9 @@ else
         var res = await http.PostAsJsonAsync("/api/Tournament/active", activeId);
         if (res!.IsSuccessStatusCode)
         {
-            ToastService.ShowSuccess("Det er nu den aktive turnering");
+            _appState.TournamentId = activeId;
+            ToastService.Notify(new(ToastType.Success, "Turneringen er nu aktivt"));
         }
-    }
-    void Reset()
-    {
-        Editing = false;
     }
 
     protected async Task LoadData()

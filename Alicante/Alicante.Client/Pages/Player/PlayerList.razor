@@ -14,7 +14,7 @@
 else
 {
     <RadzenDataGrid @ref="playerGrid" AllowAlternatingRows="false" EditMode="DataGridEditMode.Single"
-                    Data="@players" TItem="PlayerModel" RowUpdate="@OnUpdateRow" RowCreate="@OnCreateRow" Sort="@Reset" Page="@Reset" Filter="@Reset">
+                    Data="@players" TItem="PlayerModel" RowUpdate="@OnUpdateRow" RowCreate="@OnCreateRow">
         <HeaderTemplate>
             <RadzenButton ButtonStyle="ButtonStyle.Success" Icon="add_circle" Text="Ny spiller" Click="@InsertRow" Disabled="@Editing" />
         </HeaderTemplate>
@@ -38,32 +38,36 @@ else
 
             <RadzenDataGridColumn Context="player" Width="160px" TextAlign="TextAlign.Right" Frozen="true" FrozenPosition="FrozenColumnPosition.Right">
                 <Template Context="player">
-                    <RadzenButton Icon="edit" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Medium" Click="@(args => EditRow(player))" @onclick:stopPropagation="true">
+                    <RadzenButton Icon="edit" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="Radzen.ButtonSize.Medium" Click="@(args => EditRow(player))" @onclick:stopPropagation="true">
                     </RadzenButton>
-                    <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="delete" Variant="Variant.Flat" Shade="Shade.Lighter" Size="ButtonSize.Medium" class="rz-my-1 rz-ms-1" Click="@(args => DeleteRow(player))" @onclick:stopPropagation="true">
+                    <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="delete" Variant="Variant.Flat" Shade="Shade.Lighter" Size="Radzen.ButtonSize.Medium" class="rz-my-1 rz-ms-1" Click="@(args => DeleteRow(player))" @onclick:stopPropagation="true">
                     </RadzenButton>
                 </Template>
                 <EditTemplate Context="player">
-                    <RadzenButton Icon="check" ButtonStyle="ButtonStyle.Success" Variant="Variant.Flat" Size="ButtonSize.Medium" Click="@((args) => SaveRow(player))" aria-label="Save">
+                    <RadzenButton Icon="check" ButtonStyle="ButtonStyle.Success" Variant="Variant.Flat" Size="Radzen.ButtonSize.Medium" Click="@((args) => SaveRow(player))" aria-label="Save">
                     </RadzenButton>
-                    <RadzenButton Icon="close" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Medium" class="rz-my-1 rz-ms-1" Click="@((args) => CancelEdit(player))" aria-label="Cancel">
+                    <RadzenButton Icon="close" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="Radzen.ButtonSize.Medium" class="rz-my-1 rz-ms-1" Click="@((args) => CancelEdit(player))" aria-label="Cancel">
                     </RadzenButton>
-                    <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="delete" Variant="Variant.Flat" Shade="Shade.Lighter" Size="ButtonSize.Medium" class="rz-my-1 rz-ms-1" Click="@(args => DeleteRow(player))" aria-label="Delete">
+                    <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="delete" Variant="Variant.Flat" Shade="Shade.Lighter" Size="Radzen.ButtonSize.Medium" class="rz-my-1 rz-ms-1" Click="@(args => DeleteRow(player))" aria-label="Delete">
                     </RadzenButton>
                 </EditTemplate>
             </RadzenDataGridColumn>
         </Columns>
     </RadzenDataGrid>
 }
+<AppModal/>
+<ConfirmDialog @ref="dialog" />
+
 @code {
     public RadzenDataGrid<PlayerModel> playerGrid;
+    private ConfirmDialog dialog = default!;
 
     [Inject] public HttpClient http { get; set; }
     public IEnumerable<PlayerModel> players { get; set; }
 
     public bool Editing { get; set; } = false;
 
-    [Inject] private IToastService ToastService { get; set; }
+    [Inject] private BlazorBootstrap.ToastService ToastService { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
@@ -96,11 +100,12 @@ else
         var res = await http.PostAsJsonAsync<PlayerModel>($"/api/player/", model);
         if (res!.IsSuccessStatusCode)
         {
-            ToastService.ShowSuccess("Matchen er opdateret");
+            ToastService.Notify(new(ToastType.Success, "Spilleren er opdateret"));
             await LoadData();
         }
         else
         {
+            ToastService.Notify(new(ToastType.Warning, "Der opstod en fejl"));
             playerGrid.CancelEditRow(model);
         }
         await playerGrid.Reload();
@@ -108,14 +113,27 @@ else
     }
     async Task DeleteRow(PlayerModel model)
     {
+        var options = new ConfirmDialogOptions { Size = DialogSize.Small };
+
+        var confirmation = await dialog.ShowAsync(
+            title: "Hva sååå!",
+            message1: "Skal den slettes?",
+            confirmDialogOptions: options);
+
+        if (!confirmation)
+        {
+            return;
+        }
+
         var res = await http.DeleteFromJsonAsync<BaseResponseModel>($"/api/player/{model.PlayerId}");
         if (res!.Success)
         {
-            ToastService.ShowSuccess("Matchen er slettet");
+            ToastService.Notify(new(ToastType.Success, "Spilleren er droppet"));
         }
         else
         {
             playerGrid.CancelEditRow(model);
+            ToastService.Notify(new(ToastType.Warning, "Der opstod en fejl"));
         }
         await playerGrid.Reload();
     }
@@ -131,11 +149,6 @@ else
         Editing = false;
     }
     #endregion
-
-    void Reset()
-    {
-        Editing = false;
-    }
 
     protected async Task LoadData()
     {
